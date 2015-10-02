@@ -7,34 +7,34 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F4114B75-748D-4424-B529-A409EDC6132C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>UnprotectedLeftTurn</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8EC20E1A9AF2ADAF184F6B8AFEB8AEE94BA54CA7</key>
-		<string>https://github.com/sshhj89/Inha.git</string>
+		<key>FEBED0B8B94D4024443E27AA59513055B4D445CA</key>
+		<string>https://github.com/sshhj89/InhaDriverless.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>UnprotectedLeftTurn.xcodeproj/project.xcworkspace</string>
+	<string>UnprotectedLeftTurn.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8EC20E1A9AF2ADAF184F6B8AFEB8AEE94BA54CA7</key>
+		<key>FEBED0B8B94D4024443E27AA59513055B4D445CA</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/sshhj89/Inha.git</string>
+	<string>https://github.com/sshhj89/InhaDriverless.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8EC20E1A9AF2ADAF184F6B8AFEB8AEE94BA54CA7</string>
+	<string>FEBED0B8B94D4024443E27AA59513055B4D445CA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8EC20E1A9AF2ADAF184F6B8AFEB8AEE94BA54CA7</string>
+			<string>FEBED0B8B94D4024443E27AA59513055B4D445CA</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Inha</string>
+			<string>InhaDriverless</string>
 		</dict>
 	</array>
 </dict>
