@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FBB92ACF1BA5C42E0091A940 /* DriverlessCar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */; };
+		FBB92AD01BA5C4320091A940 /* LineFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */; };
+		FBECBFE21B9F23910072499E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
+		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
+		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FBFDAB821B7E508F004CFCC1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FB6E4B051B82D67E005B70F6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriverlessCar.cpp; sourceTree = "<group>"; };
+		FBEC252E1B91970900AFB2CD /* DriverlessCar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverlessCar.h; sourceTree = "<group>"; };
+		FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LineFinder.cpp; sourceTree = "<group>"; };
+		FBEC25301B91A37400AFB2CD /* LineFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineFinder.h; sourceTree = "<group>"; };
+		FBEFAB1D1B88C49600127C97 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_xfeatures2d.3.0.0.dylib; sourceTree = "<group>"; };
+		FBFDAB841B7E508F004CFCC1 /* UnprotectedLeftTurn */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnprotectedLeftTurn; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FBFDAB811B7E508F004CFCC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */,
+				FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FB6E4B041B82D658005B70F6 /* LineDetection */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */,
+				FBEC25301B91A37400AFB2CD /* LineFinder.h */,
+			);
+			name = LineDetection;
+			sourceTree = "<group>";
+		};
+		FBB92AD11BA5C4500091A940 /* DriverlessCar */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */,
+				FBEC252E1B91970900AFB2CD /* DriverlessCar.h */,
+			);
+			name = DriverlessCar;
+			sourceTree = "<group>";
+		};
+		FBFDAB7B1B7E508F004CFCC1 = {
+			isa = PBXGroup;
+			children = (
+				FBEFAB1D1B88C49600127C97 /* OpenCL.framework */,
+				FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */,
+				FBFDAB861B7E508F004CFCC1 /* UnprotectedLeftTurn */,
+				FBFDAB851B7E508F004CFCC1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FBFDAB851B7E508F004CFCC1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FBFDAB841B7E508F004CFCC1 /* UnprotectedLeftTurn */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FBFDAB861B7E508F004CFCC1 /* UnprotectedLeftTurn */ = {
+			isa = PBXGroup;
+			children = (
+				FBB92AD11BA5C4500091A940 /* DriverlessCar */,
+				FB6E4B041B82D658005B70F6 /* LineDetection */,
+				FB6E4B051B82D67E005B70F6 /* main.cpp */,
+			);
+			path = UnprotectedLeftTurn;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FBFDAB831B7E508F004CFCC1 /* UnprotectedLeftTurn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FBFDAB8B1B7E508F004CFCC1 /* Build configuration list for PBXNativeTarget "UnprotectedLeftTurn" */;
+			buildPhases = (
+				FBFDAB801B7E508F004CFCC1 /* Sources */,
+				FBFDAB811B7E508F004CFCC1 /* Frameworks */,
+				FBFDAB821B7E508F004CFCC1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnprotectedLeftTurn;
+			productName = UnprotectedLeftTurn;
+			productReference = FBFDAB841B7E508F004CFCC1 /* UnprotectedLeftTurn */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FBFDAB7C1B7E508F004CFCC1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = SonHojun;
+				TargetAttributes = {
+					FBFDAB831B7E508F004CFCC1 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+				};
+			};
+			buildConfigurationList = FBFDAB7F1B7E508F004CFCC1 /* Build configuration list for PBXProject "UnprotectedLeftTurn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FBFDAB7B1B7E508F004CFCC1;
+			productRefGroup = FBFDAB851B7E508F004CFCC1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FBFDAB831B7E508F004CFCC1 /* UnprotectedLeftTurn */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FBFDAB801B7E508F004CFCC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBECBFE21B9F23910072499E /* main.cpp in Sources */,
+				FBB92ACF1BA5C42E0091A940 /* DriverlessCar.cpp in Sources */,
+				FBB92AD01BA5C4320091A940 /* LineFinder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FBFDAB891B7E508F004CFCC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/sonhojun/Downloads/opencv-3.0.0/build/lib",
+					/usr/local/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+					"-lopencv_xfeature2d",
+					"-lopencv_xobjdetect",
+					"-lopencv_xphoto",
+					"-lopencv_ximgproc",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FBFDAB8A1B7E508F004CFCC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/sonhojun/Downloads/opencv-3.0.0/build/lib",
+					/usr/local/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+					"-lopencv_xfeature2d",
+					"-lopencv_xobjdetect",
+					"-lopencv_xphoto",
+					"-lopencv_ximgproc",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FBFDAB8C1B7E508F004CFCC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/local/include/opencv_contrib,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(PROJECT_DIR)",
+					"/Users/sonhojun/Downloads/opencv-3.0.0/build/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FBFDAB8D1B7E508F004CFCC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/local/include/opencv_contrib,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(PROJECT_DIR)",
+					"/Users/sonhojun/Downloads/opencv-3.0.0/build/lib",
+				);
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FBFDAB7F1B7E508F004CFCC1 /* Build configuration list for PBXProject "UnprotectedLeftTurn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBFDAB891B7E508F004CFCC1 /* Debug */,
+				FBFDAB8A1B7E508F004CFCC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBFDAB8B1B7E508F004CFCC1 /* Build configuration list for PBXNativeTarget "UnprotectedLeftTurn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBFDAB8C1B7E508F004CFCC1 /* Debug */,
+				FBFDAB8D1B7E508F004CFCC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FBFDAB7C1B7E508F004CFCC1 /* Project object */;
+}
