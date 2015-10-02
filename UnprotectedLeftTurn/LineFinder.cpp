@@ -3,14 +3,31 @@
 #define RHOMAX 200.0
 #define RHOMIN 130.0
 
-vector<Vec4i> LineFinder::findLines(UMat& bin)
+vector<Vec4i> LineFinder::findLines(UMat& bin, int pnha)
 {
     lines.clear();
-    positiveLines.clear();
-    negativeLines.clear();
-    horizontalLines.clear();
-    positiveInfo.clear();
-    negativeInfo.clear();
+    if(pnha == 0)
+    {
+        positiveLines.clear();
+        positiveInfo.clear();
+    }
+    else if(pnha == 1)
+    {
+        negativeLines.clear();
+        negativeInfo.clear();
+    }
+    else if (pnha == 2)
+        horizontalLines.clear();
+    else
+    {
+        positiveLines.clear();
+        positiveInfo.clear();
+        
+        negativeLines.clear();
+        negativeInfo.clear();
+        
+        horizontalLines.clear();
+    }
     
     HoughLinesP(bin, lines, deltaRho, deltaTheta, minVote, minLength, maxGap);
     return lines;
@@ -38,8 +55,6 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
     double interSectX = 0.;
     double interSectY = 0.;
     
-    int whichLane = 0;
-    
     while(it != lines.end())
     {
         pt1X =  (*it)[0] - myX;
@@ -51,7 +66,6 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
         
         if( (lineSlope < 1. && lineSlope > 0.5 ) && pt1X < 0. && (pnha == 0 || pnha == 3))  //lines at left
         {
-            
             interceptY = calInterceptY(pt1Y, lineSlope, pt1X);
             interceptX = calInterceptX(interceptY, lineSlope);
             
@@ -69,7 +83,7 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
                 ++it;
                 continue;
             }
-            cout<<"rho: " <<rho<<endl;
+            //cout<<"rho: " <<rho<<endl;
             positiveInfo.push_back(LineInfo(rho, lineSlope, \
                                             interceptX, interceptY, Point((*it)[0],(*it)[1]), Point((*it)[2],(*it)[3])));
             //positiveLines.push_back((*it));
@@ -77,29 +91,28 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
         }
         else if(lineSlope < - 0.78 && pt1X > 0. && (pnha == 1 || pnha == 3))  // lines at right
         {
+            
+            interceptY = calInterceptY(pt1Y, lineSlope, pt1X);
+            interceptX = calInterceptX(interceptY, lineSlope);
             /* rho 로 필터링 하기 */
             perSlope = perpendicular(lineSlope);
             //cout <<"perSlope: " << perSlope << endl;
             perIntercept = calInterceptY(0, perSlope, 0);
-            // cout<<"perInterCept: " << perIntercept << endl;
+            //cout<<"perInterCept: " << perIntercept << endl;
             
             interSectX = interceptY / (lineSlope - perSlope);
             interSectY = interSectX * perSlope;
             
-            rho = sqrt(pow(interSectX,2) + pow(interSectY,2));
-            
-            // cout<<"rho : " << rho<<endl;
-            
+            rho = sqrt(pow(interSectX,2) + pow(interSectY,2)); 
             if(rho > RHOMAX || rho < RHOMIN)
             {
                 ++it;
                 continue;
             }
-            
+            //cout<<"rho : " << rho<<endl;
             negativeInfo.push_back(LineInfo(rho, lineSlope, \
                                             interceptX, interceptY, Point((*it)[0],(*it)[1]), Point((*it)[2],(*it)[3])));
-            
-            //negativeLines.push_back((*it));
+            //cout<<"size: " <<negativeInfo.size()<<endl;
         }
         else if(lineSlope > - 0.1 && lineSlope < 0.1 && (pnha == 2 || pnha == 3))  //hori
         {
@@ -109,12 +122,11 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
     }
 }
 
-void LineFinder::kmeansPositive() //return rho
+bool LineFinder::kmeansPositive() //return rho
 {
-    double bandWidth[2] = {0., };
-    
+
     if(positiveInfo.size() == 0)
-        return;
+        return false;
     
     double rhoMax = 0.;
     double rhoMin = 200.;
@@ -272,7 +284,8 @@ void LineFinder::kmeansPositive() //return rho
     if(abs(sumClass1 - sumClass2) < 5. )
     {
         //cout<<" no Cluster " <<endl;   //2,3차 라인인 것을 알 수 있다.
-        return;
+        //cout<<"size: " <<positiveInfo.size()<<endl;
+        return false;
     }
     
     it = positiveInfo.begin();
@@ -285,6 +298,9 @@ void LineFinder::kmeansPositive() //return rho
     Vec4i temp;
     Vec4i max;
     Vec4i min;
+    
+    vector<LineInfo> tempMax;
+    vector<LineInfo> tempMin;
     
     while(it != positiveInfo.end())
     {
@@ -303,6 +319,8 @@ void LineFinder::kmeansPositive() //return rho
             {
                 euDistance1 = lineDistance1;
                 max = temp;
+                tempMax.clear();
+                tempMax.push_back((*it));
             }
         }
         else
@@ -318,6 +336,9 @@ void LineFinder::kmeansPositive() //return rho
             {
                 euDistance2 = lineDistance2;
                 min = temp;
+                tempMin.clear();
+                tempMin.push_back((*it));
+                
             }
             
         }
@@ -328,14 +349,17 @@ void LineFinder::kmeansPositive() //return rho
     positiveLines.push_back(max);
     positiveLines.push_back(min);
     
+    positiveInfo.clear();
+    positiveInfo.push_back(tempMax.front());
+    positiveInfo.push_back(tempMin.front());
+    return true;
 }
 
-void LineFinder::kmeansNegative()
+bool LineFinder::kmeansNegative()
 {
-    //cout<<"size: " << positiveInfo.size()<<endl;
     
     if(negativeInfo.size() == 0)
-        return;
+        return false;
     
     double rhoMax = 0.;
     double rhoMin = 200.;
@@ -343,6 +367,7 @@ void LineFinder::kmeansNegative()
     vector<double> datas;
     vector<double> class1;
     vector<double> class2;
+    vector<LineInfo> tempNegative;
     
     vector<LineInfo>::const_iterator it = negativeInfo.begin();
     
@@ -497,10 +522,8 @@ void LineFinder::kmeansNegative()
     if(abs(sumClass1 - sumClass2) < 5. )
     {
        //cout<<" no Cluster " <<endl;   //2,3차 라인인 것을 알 수 있다.
-        return;
+        return false;
     }
-    //
-    //
     
     it = negativeInfo.begin();
     double sumData = 0.;
@@ -509,6 +532,7 @@ void LineFinder::kmeansNegative()
     Vec4i temp;
     Vec4i max;
     Vec4i min;
+    
     while(it != negativeInfo.end())
     {
         sumData = (*it).rho + (*it).slope * 100.0 + (*it).interceptX + (*it).interceptY;
@@ -526,6 +550,8 @@ void LineFinder::kmeansNegative()
             {
                 euDistance = lineDistance;
                 max = temp;
+                tempNegative.clear();
+                tempNegative.push_back((*it));
             }
         }
         
@@ -533,7 +559,9 @@ void LineFinder::kmeansNegative()
     }
     
     negativeLines.push_back(max);
-    //cvWaitKey(250);
+    negativeInfo.clear();
+    negativeInfo.push_back(tempNegative.front());
+    return true;
     
 }
 
@@ -552,13 +580,14 @@ void LineFinder::filterStopLine()
         double horix1 = (*it_hori)[0];
         double horix2 = (*it_hori)[2];
         
+        //cout<<"hori : "<<horix1 <<" , " <<horix2<<endl;
         it_posi = positiveLines.begin();
         while(it_posi != positiveLines.end())
         {
             double posix1 = (*it_posi)[0];
             double posix2 = (*it_posi)[2];
-           
-            if(horix1 < posix1 && horix1 < posix2)
+            //cout<< "posi: " << posix1<< " , " << posix2<< endl;
+            if( horix1 < posix2)
             {
                  ++it_posi;
                 continue;
@@ -610,8 +639,8 @@ void LineFinder::drawLine(UMat& image)
         Point pt1((*it)[0],(*it)[1]);
         Point pt2((*it)[2],(*it)[3]);
         line(image,pt1,pt2,Scalar(0,0,255),2,CV_AA);
-       // cout<<" S   T    O   P" << endl;
-        
+        //cout<<" S   T    O   P" << endl;
+
         ++it;
     }
 }
