@@ -560,8 +560,8 @@ bool LineFinder::kmeansNegative()
     }
     
     negativeLines.push_back(max);
-    negativeInfo.clear();
     
+    negativeInfo.clear();
     negativeInfo.push_back(tempNegative.front());
     return true;
     

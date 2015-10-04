@@ -20,11 +20,16 @@ private:
     double bkBandRight;
     double bkBandLeft;
     int state; // 0: possible line + not horizontal line
+               // 1: horizontal line detected.
+               // 2: detected traffic lights
+               // 3: detected unprotected left turn traffic signal
     
     double endX;
     double endY;
     LineInfo criteriLine;
     double theta;
+    
+    vector<Vec3f> circles;
     
     double angle( Point pt1, Point pt2, Point pt0 )
     {
@@ -43,9 +48,10 @@ public:
         this->endY = 10.;
         this->criteriLine = LineInfo(0.0, 0.0, 0.0, 0.0, Point(this->endX,this->endY),
                                      Point(this->centerX,this->centerY));
-        theta = 0.0;
-        bandRight = -1.;
-        bandLeft = -1. ;
+        this->theta = 0.0;
+        this->bandRight = -1.;
+        this->bandLeft = -1. ;
+        this->circles.clear();
     }
     
     LineFinder finder;
@@ -55,6 +61,8 @@ public:
     
     void findSquares( const UMat& image, vector<vector<Point> >& squares );
     void drawSquares( UMat& image, const vector<vector<Point> >& squares );
+    
+    void drawTraffic(const UMat& image, const vector<vector<Point> >& squares,const vector<Vec3f>& circles);
     
     int getCenterX(){return this->centerX;}
     int getCenterY(){return this->centerY;}
@@ -77,7 +85,7 @@ public:
     void setBkBandRight(double d) { this->bkBandRight = d; }
     void setBkBandLeft(double d) { this->bkBandLeft = d; }
     
-    int laneChecker();
+    int laneChecker(bool rfPosi, bool rfNega);
    };
 
 #endif 
