@@ -17,6 +17,8 @@ private:
     int whichLane;  //1, 2, 3 : means each lane
     double bandRight;
     double bandLeft;
+    double bkBandRight;
+    double bkBandLeft;
     int state; // 0: possible line + not horizontal line
     
     double endX;
@@ -42,6 +44,8 @@ public:
         this->criteriLine = LineInfo(0.0, 0.0, 0.0, 0.0, Point(this->endX,this->endY),
                                      Point(this->centerX,this->centerY));
         theta = 0.0;
+        bandRight = -1.;
+        bandLeft = -1. ;
     }
     
     LineFinder finder;
@@ -61,6 +65,8 @@ public:
     double getEndX() { return this->endX;}
     double getEndY() { return this->endY;}
     LineInfo getCriteriaLine() { return this->criteriLine; }
+    double getBkBandLeft() { return this->bkBandLeft; }
+    double getBkBandRight() { return this->bkBandRight;}
     
     void setCenterX(int centerX){ this->centerX = centerX;}
     void setCenterY(int centerY){ this->centerY = centerY;}
@@ -68,7 +74,10 @@ public:
     void setBandRight(double bandRight){ this->bandRight = bandRight;}
     void setBandLeft(double bandLeft){ this->bandLeft = bandLeft;}
     void setState(int state) { this->state = state;}
+    void setBkBandRight(double d) { this->bkBandRight = d; }
+    void setBkBandLeft(double d) { this->bkBandLeft = d; }
     
+    int laneChecker();
    };
 
 #endif 

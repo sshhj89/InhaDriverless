@@ -352,6 +352,7 @@ bool LineFinder::kmeansPositive() //return rho
     positiveInfo.clear();
     positiveInfo.push_back(tempMax.front());
     positiveInfo.push_back(tempMin.front());
+    
     return true;
 }
 
@@ -560,6 +561,7 @@ bool LineFinder::kmeansNegative()
     
     negativeLines.push_back(max);
     negativeInfo.clear();
+    
     negativeInfo.push_back(tempNegative.front());
     return true;
     

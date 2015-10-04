@@ -23,7 +23,7 @@ int main()
 {
     ocl::setUseOpenCL(false);
     
-    VideoCapture video("/Users/sonhojun/Downloads/data/driving1.mp4");
+    VideoCapture video("/Users/sonhojun/Downloads/data/changeline2.mp4");
     
     if(!video.isOpened())
     {
@@ -46,8 +46,6 @@ int main()
     UMat element(3,3,CV_8U,Scalar(1));
     UMat tpElement(1,1,CV_8U,Scalar(255));
  
-    bool clusterPosi = false;
-    bool clusterNega = false;
     DriverlessCar car = DriverlessCar();
     car.setState(0);
     
@@ -123,6 +121,7 @@ int main()
         car.finder.filterLine(edgeWhite,car.getCenterX(),car.getCenterY(), 1);
         car.finder.kmeansNegative();
         
+        car.laneChecker();
         car.finder.drawLine(laneCrop);
 
         imshow("lines", laneCrop);
