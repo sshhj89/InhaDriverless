@@ -64,7 +64,6 @@ void DriverlessCar::findSquares( const UMat& image, vector<vector<Point> >& squa
                 gray = gray0 >= (l+1)*255/N;
             }
             
-            
             // find contours and store them all as a list
             findContours(gray, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
             vector<Point> approx;
@@ -72,16 +71,9 @@ void DriverlessCar::findSquares( const UMat& image, vector<vector<Point> >& squa
             // test each contour
             for( size_t i = 0; i < contours.size(); i++ )
             {
-                // approximate contour with accuracy proportional
-                // to the contour perimeter
+
                 approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true)*0.02, true);
                 
-                // square contours should have 4 vertices after approximation
-                // relatively large area (to filter out noisy contours)
-                // and be convex.
-                // Note: absolute value of an area is used because
-                // area may be positive or negative - in accordance with the
-                // contour orientation
                 if( approx.size() == 4 &&
                    fabs(contourArea(Mat(approx))) > 100 && fabs(contourArea(Mat(approx))) < 300 &&
                    isContourConvex(Mat(approx)) )
@@ -137,3 +129,71 @@ void DriverlessCar::drawCircles(const cv::UMat &image, const vector<Vec3f> &circ
     
 }
 
+
+int DriverlessCar::laneChecker()
+{
+    if(this->finder.getPositiveLinesInfo().size() == 0)
+        return 0;
+    
+    double minBandRight = 1000.;
+    double minBandLeft = 1000.;
+    vector<LineInfo>::const_iterator it_posi = this->finder.getPositiveLinesInfo().begin();
+    vector<LineInfo>::const_iterator it_nega = this->finder.getNagativeLinesInfo().begin();
+    while(it_posi != this->finder.getPositiveLinesInfo().end())
+    {
+        if((*it_posi).getRho() < minBandLeft)
+        {
+            this->setBkBandLeft(this->getBandLeft());
+            minBandLeft = (*it_posi).getRho();
+            this->setBandLeft(minBandLeft);
+        }
+        
+        it_posi++;
+    }
+    
+    while(it_nega != this->finder.getNagativeLinesInfo().end())
+    {
+        if((*it_nega).getRho() < minBandRight)
+        {
+            this->setBkBandRight(this->getBandRight());
+            minBandRight = (*it_nega).getRho();
+            this->setBandRight(minBandRight);
+        }
+        
+        it_nega++;
+    }
+
+    
+    
+    cout<<"bandLEft : " << this->getBandRight() << " bkBandLEft: " <<this->getBkBandRight()<<endl;
+    if(this->getBandLeft() - this->getBkBandLeft() > 20. )
+    {
+        cout<<"move left posi" <<endl;
+        cvWaitKey(1000);
+        return -1;
+    }else if(this->getBkBandRight() - this->getBandRight() > 20. )
+    {
+        cout<<"move left nega" <<endl;
+        cvWaitKey(1000);
+        return -1;
+    }
+    else if(this->getBandRight() - this->getBkBandRight() > 20. )
+    {
+        if(this->getBkBandRight() == -1.)
+            return 0;
+        
+        cout<<"move Right posi " <<endl;
+        cvWaitKey(1000);
+        return 1;
+    }else if(this->getBkBandLeft() - this->getBandLeft() > 20. )
+    {
+        cout<<"move right posi" <<endl;
+        cvWaitKey(1000);
+        return 1;
+    }
+
+    
+    
+ 
+    return 0;
+}
