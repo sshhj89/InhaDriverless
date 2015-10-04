@@ -55,7 +55,8 @@ void DriverlessCar::findSquares( const UMat& image, vector<vector<Point> >& squa
                 Canny(gray0, gray, 20,250, 3);
                 // dilate canny output to remove potential
                 // holes between edge segments
-                dilate(gray, gray, Mat(), Point(-1,-1));
+                //dilate(gray, gray, Mat(), Point(-1,-1));
+                //imshow("edge",gray);
             }
             else
             {
@@ -122,18 +123,43 @@ void DriverlessCar::drawCircles(const cv::UMat &image, const vector<Vec3f> &circ
         int radius = cvRound(circles[i][2]);
         // circle center
         circle( temp, center, 3, Scalar(0,255,0), -1, 8, 0 );
-        circle( temp, center, radius, Scalar(0,0,255), 3, 8, 0 );
+        circle( temp, center, radius, Scalar(255,0,0), 3, 8, 0 );
     }
     
     imshow("circle",temp);
     
 }
 
-
-int DriverlessCar::laneChecker()
+void DriverlessCar::drawTraffic(const cv::UMat &image, const vector<vector<Point> > &squares,
+                                const vector<Vec3f> &circles)
 {
-    if(this->finder.getPositiveLinesInfo().size() == 0)
-        return 0;
+    Mat temp;
+    image.copyTo(temp);
+    
+    for( size_t i = 0; i < circles.size(); i++ )
+    {
+        Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+        int radius = cvRound(circles[i][2]);
+        // circle center
+        circle( temp, center, 3, Scalar(0,255,0), -1, 8, 0 );
+        circle( temp, center, radius, Scalar(255,0,0), 3, 8, 0 );
+    }
+    
+    for( size_t i = 0; i < squares.size(); i++ )
+    {
+        const Point* p = &squares[i][0];
+        int n = (int)squares[i].size();
+        polylines(temp, &p, &n, 1, true, Scalar(0,255,0), 3, LINE_AA);
+    }
+
+    
+    imshow("traffic",temp);
+    
+}
+
+int DriverlessCar::laneChecker(bool rfPosi, bool rfNega)
+{
+   
     
     double minBandRight = 1000.;
     double minBandLeft = 1000.;
@@ -141,6 +167,9 @@ int DriverlessCar::laneChecker()
     vector<LineInfo>::const_iterator it_nega = this->finder.getNagativeLinesInfo().begin();
     while(it_posi != this->finder.getPositiveLinesInfo().end())
     {
+//        if(rfPosi == false) need fix
+//            return 0;
+        
         if((*it_posi).getRho() < minBandLeft)
         {
             this->setBkBandLeft(this->getBandLeft());
@@ -153,6 +182,9 @@ int DriverlessCar::laneChecker()
     
     while(it_nega != this->finder.getNagativeLinesInfo().end())
     {
+//        if(rfNega == false)  need fix
+//            return 0;
+        
         if((*it_nega).getRho() < minBandRight)
         {
             this->setBkBandRight(this->getBandRight());
@@ -163,16 +195,21 @@ int DriverlessCar::laneChecker()
         it_nega++;
     }
 
+    //cout<<"bandLEft : " << this->getBandRight() << " bkBandLEft: " <<this->getBkBandRight()<<endl;
     
-    
-    cout<<"bandLEft : " << this->getBandRight() << " bkBandLEft: " <<this->getBkBandRight()<<endl;
     if(this->getBandLeft() - this->getBkBandLeft() > 20. )
     {
+        if(this->getBkBandLeft() == -1.)
+            return 0;
+
         cout<<"move left posi" <<endl;
         cvWaitKey(1000);
         return -1;
     }else if(this->getBkBandRight() - this->getBandRight() > 20. )
     {
+        if(this->getBkBandRight() == -1.)
+            return 0;
+        
         cout<<"move left nega" <<endl;
         cvWaitKey(1000);
         return -1;
@@ -187,6 +224,9 @@ int DriverlessCar::laneChecker()
         return 1;
     }else if(this->getBkBandLeft() - this->getBandLeft() > 20. )
     {
+        if(this->getBkBandLeft() == -1.)
+            return 0;
+        
         cout<<"move right posi" <<endl;
         cvWaitKey(1000);
         return 1;
