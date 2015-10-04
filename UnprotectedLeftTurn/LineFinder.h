@@ -30,14 +30,14 @@ using namespace cv;
 
 class LineInfo
 {
-public:
+public:  /* to do: make private */
     double rho;
     double slope;
     double interceptY;
     double interceptX;
     Point pt1;
     Point pt2;
-
+    bool refined;
 
     LineInfo(double r, double s, double intX, double intY, Point pt1, Point pt2)
     {
@@ -47,7 +47,7 @@ public:
         this->interceptY = intY;
         this->pt1 = pt1;
         this->pt2 = pt2;
-
+        this->refined = false;
     }
     
     LineInfo(){}
@@ -60,6 +60,7 @@ public:
     int getPoint1Y() const { return pt1.y;}
     int getPoint2X() const { return pt2.x;}
     int getPoint2Y() const { return pt2.y;}
+    bool getRefined() const { return refined; }
     
     double calTheta(double lx1, double lx2, double ly1, double ly2)// 각도 계산하기 입력된 직선의 xy값 2개
     {
