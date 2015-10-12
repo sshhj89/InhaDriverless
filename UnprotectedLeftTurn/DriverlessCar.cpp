@@ -7,7 +7,7 @@
 //
 
 #include "DriverlessCar.h"
-
+#define THRESHOLD_LANE 25.0
 
 void DriverlessCar::drawSquares( UMat& image, const vector<vector<Point> >& squares )
 {
@@ -159,7 +159,9 @@ void DriverlessCar::drawTraffic(const cv::UMat &image, const vector<vector<Point
 
 int DriverlessCar::laneChecker(bool rfPosi, bool rfNega)
 {
-   
+    
+    if(this->finder.getPositiveLinesInfo().size() != 2) // need for optimize .
+        return 0;
     
     double minBandRight = 1000.;
     double minBandLeft = 1000.;
@@ -195,40 +197,42 @@ int DriverlessCar::laneChecker(bool rfPosi, bool rfNega)
         it_nega++;
     }
 
-    //cout<<"bandLEft : " << this->getBandRight() << " bkBandLEft: " <<this->getBkBandRight()<<endl;
+    //cout<<"bandLEft : " << this->getBandLeft() << " bkBandLEft: " <<this->getBkBandLeft()<<endl;
+   // cout<<"bandRight : " << this->getBandRight() << " bkBandRight: " <<this->getBkBandRight()<<endl;
+
     
-    if(this->getBandLeft() - this->getBkBandLeft() > 20. )
+    if(this->getBandLeft() - this->getBkBandLeft() > THRESHOLD_LANE )
     {
         if(this->getBkBandLeft() == -1.)
             return 0;
 
         cout<<"move left posi" <<endl;
-        cvWaitKey(1000);
+
         return -1;
-    }else if(this->getBkBandRight() - this->getBandRight() > 20. )
+    }else if(this->getBkBandRight() - this->getBandRight() > THRESHOLD_LANE )
     {
         if(this->getBkBandRight() == -1.)
             return 0;
         
         cout<<"move left nega" <<endl;
-        cvWaitKey(1000);
+
         return -1;
     }
-    else if(this->getBandRight() - this->getBkBandRight() > 20. )
+    else if(this->getBandRight() - this->getBkBandRight() > THRESHOLD_LANE )
     {
         if(this->getBkBandRight() == -1.)
             return 0;
         
         cout<<"move Right posi " <<endl;
-        cvWaitKey(1000);
+
         return 1;
-    }else if(this->getBkBandLeft() - this->getBandLeft() > 20. )
+    }else if(this->getBkBandLeft() - this->getBandLeft() > THRESHOLD_LANE )
     {
         if(this->getBkBandLeft() == -1.)
             return 0;
         
         cout<<"move right posi" <<endl;
-        cvWaitKey(1000);
+
         return 1;
     }
 

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F4114B75-748D-4424-B529-A409EDC6132C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>UnprotectedLeftTurn</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>FEBED0B8B94D4024443E27AA59513055B4D445CA</key>
 		<string>https://github.com/sshhj89/InhaDriverless.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>UnprotectedLeftTurn.xcodeproj/project.xcworkspace</string>
+	<string>UnprotectedLeftTurn.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>FEBED0B8B94D4024443E27AA59513055B4D445CA</key>

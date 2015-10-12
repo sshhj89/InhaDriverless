@@ -21,6 +21,7 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/tracking.hpp>
 
 using namespace std;
 using namespace cv;

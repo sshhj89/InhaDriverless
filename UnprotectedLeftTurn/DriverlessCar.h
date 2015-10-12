@@ -19,7 +19,8 @@ private:
     double bandLeft;
     double bkBandRight;
     double bkBandLeft;
-    int state; // 0: possible line + not horizontal line
+    int state; // -1: impossible
+               // 0: possible line + not horizontal line
                // 1: horizontal line detected.
                // 2: detected traffic lights
                // 3: detected unprotected left turn traffic signal

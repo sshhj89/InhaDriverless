@@ -23,7 +23,7 @@ int main()
 {
     ocl::setUseOpenCL(false);
     
-    VideoCapture video("/Users/sonhojun/Downloads/data/driving2.mp4");
+    VideoCapture video("/Users/sonhojun/Downloads/data/driving1.mp4");
     
     if(!video.isOpened())
     {
@@ -79,14 +79,16 @@ int main()
     while (1){
         video.read(image);
         video.read(image);
-        video.read(image);
+
+        //imshow("ori",image);
         /************** line detection ***************/
-        if(car.getState() == 0)
+        if(1/*car.getState() == 0 || car.getState() == -1*/)
         {
             laneCrop = image(Rect(LANECROP_X,LANECROP_Y,LANECROP_W,LANECROP_H));
             
             car.setCenterX(laneCrop.cols/2);
             car.setCenterY(laneCrop.rows);
+            
             
             //inRange(laneCrop,cv::Scalar( 0, 0, 210), cv::Scalar(255, 255, 255),White);
             //imshow("rgb", White);
@@ -169,14 +171,25 @@ int main()
                     break;
             }
             
-            
-            //imshow("lines", laneCrop);
+            imshow("lines", laneCrop);
         }
         
         /***  detection front car *****/
-        
+        inRange(laneCrop,Scalar(25, 120, 140), Scalar(65, 255, 255),colorRed);
+        car.findCircles(colorRed, circles);
+        //imshow("red", colorRed);
+        car.drawCircles(laneCrop, circles);
+        if(circles.size() >= 1)
+        {
+            car.setState(-1);
+            continue;
+        }else
+        {
+            car.setState(1);
+        }
+
         /*** detection plate and traffic lights *******/
-        if(car.getState() == 1) //horizontal detected
+        if(1/*car.getState() == 1*/) //horizontal detected
         {
             plateCrop = image(Rect(640,180,320,240));
             
@@ -185,22 +198,20 @@ int main()
             cvtColor(plateCrop, colorRed, CV_BGR2HSV);
             cvtColor(plateCrop, colorGreen, CV_BGR2HSV);
             
-            //imshow("red1", colorRed);
             inRange(colorRed,Scalar(169, 140, 150), Scalar(255, 255, 255),colorRed);
             //imshow("red2", colorRed);
             
-            // imshow("green1",colorGreen);
             inRange(colorGreen,cv::Scalar(47, 140, 80), Scalar(94, 255, 180),colorGreen);
             // imshow("green",colorGreen);
             
             car.findCircles(colorRed, circles);
-            //car.drawCircles(plateCrop, circles);
+            if(circles.size() == 0)
+                car.findCircles(colorGreen, circles);
             
             newSquares.clear();
             heightwidth.clear();
             
             car.findSquares(plateCrop, squares);
-            //car.drawSquares(plateCrop, squares);
             
             for( size_t j = 0; j < squares.size(); j++ )
             {
@@ -235,10 +246,11 @@ int main()
             }
             
             //traffic lights 를 찾기 위함
+            double trafficY = 0.;
+            
             for( size_t i = 0; i < circles.size(); i++ )
             {
                 Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
-                //cout<<center.x<<", " <<center.y<<endl;
                 for( size_t j = 0; j < squares.size(); j++ )
                 {
                     int pX = cvRound((squares[j][0].x + squares[j][1].x + squares[j][2].x + squares[j][3].x) / 4);
@@ -280,18 +292,18 @@ int main()
                     }
                 }
             }
+            
             if(newSquares.size() > 0 )
             {
-                //car.drawSquares(temp, newSquares);
                 car.drawTraffic(plateCrop,newSquares,circles);
-                cvWaitKey(1000);
                 cout<<"find traffic"<<endl;
+                //Todo traffic point 계산
+                
             }
-        
-        
+            
         if(heightwidth.size() == 0)
             continue;
-        
+            
         /**** detect unprotected left turn traffic signal *****/
         UMat sqaureCrop;
         int cols;
@@ -304,12 +316,6 @@ int main()
         {
             
             Point p = squares[j][0];
-            cout<<"p: "<<p.x<<" , "<<p.y<<endl;
-            cout<<squares[j][1].x << ", " << squares[j][1].y<<endl;
-            cout<<squares[j][2].x << ", " << squares[j][2].y<<endl;
-            cout<<squares[j][3].x << ", " << squares[j][3].y<<endl;
-            cout<<"cols: " << cols << " rows : " << rows<<endl;
-            cout<<"hiehgt: " << heightwidth[j].x << ", " << heightwidth[j].y<<endl;
             
             int maxX = 0;
             int minX = 1000;
@@ -335,12 +341,20 @@ int main()
                     minY = squares[j][maxi].y;
                 }
             }
-        
+            
+            cout<<"trafficY : " << trafficY << " , plate: " << (maxY - (maxY - minY)/2) << endl;
+            // traffic lights랑 동시에 발견이 안되는 문제점.
+//            if(abs(trafficY - (maxY - (maxY - minY)/2)) > 40.)
+//            {
+//                cout<<"not plate" << endl;
+//                continue;
+//            }
+            
             if((maxY-minY) * 1.2 <(maxX - minX) || (maxY-minY) > (maxX - minX) * 1.4)
                 continue;
-       
+            
             sqaureCrop = plateCrop(Rect(minX,minY,heightwidth[j].x ,heightwidth[j].y));
-            imshow("plate", sqaureCrop);
+            //imshow("plate", sqaureCrop);
             UMat sqTemp;
             UMat whiteArrow;
             //pyrUp( sqaureCrop, sqaureCrop, Size( sqaureCrop.cols*2, sqaureCrop.rows*2 ) );
@@ -351,8 +365,8 @@ int main()
             
             
             /** todo : traffic lights 가 있다면 그걸로 필터링 하기 ****/
-                 //todo : 가우시안 분산 에러 처리 찾아보기 ****/
-            double totpix = sqTemp.cols*sqTemp.rows ;
+            //todo : 가우시안 분산 에러 처리 찾아보기 ****/
+           double totpix = sqTemp.cols*sqTemp.rows ;
             Mat tt;
             sqTemp.copyTo(tt);
             
@@ -366,21 +380,21 @@ int main()
                         tot++;
                 }
             }
-            cout<<"RATIO: " << ((tot / totpix )*100) <<endl;
+            //cout<<"RATIO: " << ((tot / totpix )*100) <<endl;
             if(((tot / totpix )*100)< 50 )
                 continue;
             
             pyrUp( sqTemp, sqTemp, Size( sqTemp.cols*2, sqTemp.rows*2 ) );
             pyrUp( sqTemp, sqTemp, Size( sqTemp.cols*2, sqTemp.rows*2 ) );
             
-            imshow("test2",sqTemp);
+            //imshow("test2",sqTemp);
             pyrUp( sqaureCrop, sqaureCrop, Size( sqaureCrop.cols*2, sqaureCrop.rows*2 ) );
             pyrUp( sqaureCrop, sqaureCrop, Size( sqaureCrop.cols*2, sqaureCrop.rows*2 ) );
             cvtColor(sqaureCrop, sqaureCrop, CV_BGR2GRAY);
             threshold(sqaureCrop, sqaureCrop,50,255,THRESH_BINARY);
 
             // addWeighted(sqaureCrop, 2.5, sqaureCrop, -1.5, 0, sqaureCrop);
-            imshow("test1",sqaureCrop);
+           
             f2d->detect( sqaureCrop, keypoints_2 );
             f2d->compute( sqaureCrop, keypoints_2, descriptors_2 );
             
@@ -393,19 +407,19 @@ int main()
                 continue;
             }
             else
-                cout<<"matches : " << matches.size()<<endl;
+                cout<<"find plate : " << matches.size()<<endl;
             
             Mat img_matches;
+            imshow("test1",sqaureCrop);
             drawMatches(db_original, keypoints_1, sqaureCrop, keypoints_2, matches, img_matches);
             imshow("matches", img_matches);
-            cvWaitKey(100);
             
             sqaureCrop.release();
             
         }
-            
+
     }
-        
+
          
         cvWaitKey(20);
     }
