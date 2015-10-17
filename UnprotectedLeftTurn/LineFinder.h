@@ -77,8 +77,6 @@ public:  /* to do: make private */
 
         return result ;
     }
-    
-    
 };
 
 class LineFinder

@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FBB92ACF1BA5C42E0091A940 /* DriverlessCar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */; };
-		FBB92AD01BA5C4320091A940 /* LineFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */; };
-		FBE467901BC6C52300F3DB6D /* MovingFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE4678E1BC6C52300F3DB6D /* MovingFinder.cpp */; };
+		FBE24F051BCF5BE400F5CB1D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
+		FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */; };
 		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
 		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
 /* End PBXBuildFile section */
@@ -28,6 +27,9 @@
 
 /* Begin PBXFileReference section */
 		FB6E4B051B82D67E005B70F6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FBE24F061BCF5C8B00F5CB1D /* MetaHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaHeader.h; sourceTree = "<group>"; };
+		FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lane.cpp; sourceTree = "<group>"; };
+		FBE24F0B1BCF5D5600F5CB1D /* Lane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lane.h; sourceTree = "<group>"; };
 		FBE4678E1BC6C52300F3DB6D /* MovingFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MovingFinder.cpp; sourceTree = "<group>"; };
 		FBE4678F1BC6C52300F3DB6D /* MovingFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovingFinder.h; sourceTree = "<group>"; };
 		FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriverlessCar.cpp; sourceTree = "<group>"; };
@@ -104,6 +106,9 @@
 				FBB92AD11BA5C4500091A940 /* DriverlessCar */,
 				FB6E4B041B82D658005B70F6 /* LineDetection */,
 				FB6E4B051B82D67E005B70F6 /* main.cpp */,
+				FBE24F061BCF5C8B00F5CB1D /* MetaHeader.h */,
+				FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */,
+				FBE24F0B1BCF5D5600F5CB1D /* Lane.h */,
 			);
 			path = UnprotectedLeftTurn;
 			sourceTree = "<group>";
@@ -164,9 +169,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBE467901BC6C52300F3DB6D /* MovingFinder.cpp in Sources */,
-				FBB92ACF1BA5C42E0091A940 /* DriverlessCar.cpp in Sources */,
-				FBB92AD01BA5C4320091A940 /* LineFinder.cpp in Sources */,
+				FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */,
+				FBE24F051BCF5BE400F5CB1D /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

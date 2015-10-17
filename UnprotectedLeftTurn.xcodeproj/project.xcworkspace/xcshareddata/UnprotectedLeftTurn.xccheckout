@@ -11,7 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>FEBED0B8B94D4024443E27AA59513055B4D445CA</key>
-		<string>https://github.com/sshhj89/InhaDriverless.git</string>
+		<string>https://github.com/sshhj89/InhaDriverless</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>UnprotectedLeftTurn.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/sshhj89/InhaDriverless.git</string>
+	<string>https://github.com/sshhj89/InhaDriverless</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

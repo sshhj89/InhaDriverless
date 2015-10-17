@@ -1,7 +1,7 @@
 #include "LineFinder.h"
 
-#define RHOMAX 200.0
-#define RHOMIN 130.0
+//#define RHOMAX 200.0
+//#define RHOMIN 130.0
 
 vector<Vec4i> LineFinder::findLines(UMat& bin, int pnha)
 {
@@ -122,7 +122,7 @@ void LineFinder::filterLine(UMat& image, int myX , int myY, int pnha )
     }
 }
 
-bool LineFinder::kmeansPositive() //return rho
+bool LineFinder::kmeansPositive()
 {
 
     if(positiveInfo.size() == 0)
