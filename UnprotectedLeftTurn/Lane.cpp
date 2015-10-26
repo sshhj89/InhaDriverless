@@ -12,6 +12,7 @@ int bkTotLeft = 0;
 int bkTotRight = 0;
 int noiseLeft = 0;
 int noiseRight = 0;
+
 void Lane::findWhiteInImage(Mat& image, Mat& result)
 {
     inRange(image,Scalar( WHITE_HUE_MIN, WHITE_SAT_MIN, WHITE_INT_MIN), Scalar(WHITE_HUE_MAX, WHITE_SAT_MAX, WHITE_INT_MAX), result);
@@ -34,8 +35,8 @@ vector<Vec4i> Lane::findLines(Mat& image, bool stop )
     if(stop == true)
     {
         horizontalLines.clear();
-        setLineLengthAndGap(60,20);  //line pixel and gap
-        setMinVote(60);
+        setLineLengthAndGap(70,20);  //line pixel and gap
+        setMinVote(80);
         HoughLinesP(image, lines, deltaRho, deltaTheta, minVote, minLength, maxGap);
     }
     
@@ -174,20 +175,17 @@ void Lane::filterStopLine()
     vector<Vec4i>::const_iterator it_posi;
     vector<Vec4i>::const_iterator it_hori;
     
-    
     it_hori = horizontalLines.begin();
     while(it_hori != horizontalLines.end())
     {
         double horix1 = (*it_hori)[0];
         double horix2 = (*it_hori)[2];
         
-        //cout<<"hori : "<<horix1 <<" , " <<horix2<<endl;
         it_posi = positiveLines.begin();
         while(it_posi != positiveLines.end())
         {
             double posix1 = (*it_posi)[0];
             double posix2 = (*it_posi)[2];
-            //cout<< "posi: " << posix1<< " , " << posix2<< endl;
             if( horix1 < posix2)
             {
                 ++it_posi;
@@ -198,6 +196,8 @@ void Lane::filterStopLine()
             
             ++it_posi;
         }
+        
+        
         
         ++it_hori;
     }
@@ -220,7 +220,11 @@ int Lane::kmeansPositive()
 {
     
     if(positiveInfo.size() == 0 || positiveInfo.size() == 1)
+    {
+        cout<<"return 1"<<endl;
         return 1; // just one line detected or not
+    
+    }
     
     double rhoMax = 0.;
     double rhoMin = RHOMAX;
@@ -245,7 +249,7 @@ int Lane::kmeansPositive()
             
         }
         
-        if(rhoMin > (*it).getRho())
+        if(rhoMin >= (*it).getRho())
         {
             class2.clear();
             rhoMin = (*it).getRho();
@@ -259,7 +263,10 @@ int Lane::kmeansPositive()
     }
     
     if(class2.size() == 0 || class1.size() == 0)
+    {
+        cout<<"hererererere"<<endl;
         return 2;
+    }
     
     double total4class1 = 0.;
     double total4class2 = 0.;
@@ -278,10 +285,10 @@ int Lane::kmeansPositive()
         double sum = 0.;
         while(it != positiveInfo.end())
         {
-            total4class1 += ((*it).getSlope() - class1[0]) * 1000 + ((*it).getIntX() - class1[1]) + \
+            total4class1 += ((*it).getSlope() - class1[0]) * 100 + ((*it).getIntX() - class1[1]) + \
             ((*it).getIntY() - class1[2]) +((*it).getRho() - class1[3]);
             
-            total4class2 += ((*it).getSlope() - class2[0]) * 1000 + ((*it).getIntX() - class2[1]) + \
+            total4class2 += ((*it).getSlope() - class2[0]) * 100 + ((*it).getIntX() - class2[1]) + \
             ((*it).getIntY() - class2[2]) +((*it).getRho() - class2[3]);
             
             if(abs(total4class1) <= abs(total4class2)) // assign class1;
@@ -364,7 +371,7 @@ int Lane::kmeansPositive()
         
     }
     
-    if(findFlag == true)  //find & classift
+    if(findFlag == true)  //find & classify
     {
         
     }
@@ -373,11 +380,13 @@ int Lane::kmeansPositive()
     double sumClass2 = 0.;
     
     sumClass1 = class1[0] * 100. + class1[1] + class1[2] + class1[3];
-    sumClass2 = class2[0] * 100. + class2[1] + class2[2] + class2[3];
     
-    if(abs(sumClass1 - sumClass2) < 5. )
+    sumClass2 = class2[0] * 100. + class2[1] + class2[2] + class2[3];
+    cout<<"diffff: " <<abs(sumClass1 - sumClass2)<<endl;
+   
+    if(abs(sumClass1 - sumClass2) < 60.)
     {
-        //cout<<" no Cluster " <<endl;
+        cout<<" no Cluster " <<abs(sumClass1 - sumClass2)<<endl;
         return 2; //fail to cluster
     }
     
@@ -446,217 +455,6 @@ int Lane::kmeansPositive()
     positiveInfo.push_back(tempMin.front());
     
     return 3; //success cluster
-}
-
-int Lane::kmeansNegative()
-{
-    
-    if(negativeInfo.size() == 0 || negativeInfo.size() == 1)
-        return 1;
-    
-    double rhoMax = RHOMIN - RHOMIN;
-    double rhoMin = RHOMAX;
-    
-    bool findFlag = false;
-    vector<double> datas;
-    vector<double> class1;
-    vector<double> class2;
-    vector<LineInfo> tempNegative;
-    
-    vector<LineInfo>::const_iterator it = negativeInfo.begin();
-    
-    /*** class init ****/
-    while(it != negativeInfo.end())
-    {
-        if(rhoMax < (*it).getRho())
-        {
-            class1.clear();
-            rhoMax = (*it).getRho();
-            class1.push_back((*it).getSlope());
-            class1.push_back((*it).getIntX());
-            class1.push_back((*it).getIntY());
-            class1.push_back((*it).getRho());
-            
-        }
-        
-        if(rhoMin > (*it).getRho())
-        {
-            class2.clear();
-            rhoMin = (*it).getRho();
-            class2.push_back((*it).getSlope());
-            class2.push_back((*it).getIntX());
-            class2.push_back((*it).getIntY());
-            class2.push_back((*it).getRho());
-        }
-        
-        ++it;
-    }
-    
-    double total4class1 = 0.;
-    double total4class2 = 0.;
-    
-    double sum4Class1[FEATURES] = {0.,};
-    int count4Class1 = 0;
-    double center4Class1[FEATURES] = {0.,};
-    
-    double sum4Class2[FEATURES] = {0.,};
-    int count4Class2 = 0;
-    double center4Class2[FEATURES] = {0.,};
-    
-    for(int testNum = 0; testNum<TESTNUM ; testNum++)
-    {
-        
-        it = negativeInfo.begin();
-        
-        while(it != negativeInfo.end())
-        {
-            total4class1 += ((*it).getSlope() - class1[0]) * 1000 + ((*it).getIntX() - class1[1]) + \
-            ((*it).getIntY() - class1[2]) +((*it).getRho() - class1[3]);
-            
-            total4class2 += ((*it).getSlope() - class2[0]) * 1000 + ((*it).getIntX() - class2[1]) + \
-            ((*it).getIntY() - class2[2]) +((*it).getRho() - class2[3]);
-            
-            if(abs(total4class1) <= abs(total4class2)) // assign class1;
-            {
-                sum4Class1[0] += (*it).getSlope();
-                sum4Class1[1] += (*it).getIntX();
-                sum4Class1[2] += (*it).getIntY();
-                sum4Class1[3] += (*it).getRho();
-                count4Class1++;
-            }
-            else
-            {
-                sum4Class2[0] += (*it).getSlope();
-                sum4Class2[1] += (*it).getIntX();
-                sum4Class2[2] += (*it).getIntY();
-                sum4Class2[3] += (*it).getRho();
-                count4Class2++;
-                
-            }
-            
-            /**** init ****/
-            total4class1 = total4class2 = 0.;
-            
-            ++it;
-        }
-        
-        
-        /*** ceter  ***/
-        for(int i=0;i<FEATURES;i++)
-        {
-            center4Class1[i] = sum4Class1[i] / count4Class1;
-            center4Class2[i] = sum4Class2[i] / count4Class2;
-        }
-        
-        /*** check class with center4Class *****/
-        double checkSumClass1 = 0.;
-        double checkSumClass2 = 0.;
-        
-        for(int i=0;i<FEATURES;i++)
-        {
-            checkSumClass1 += class1[i] - center4Class1[i];
-            checkSumClass2 += class2[i] - center4Class2[i];
-        }
-        
-        if(checkSumClass1 != 0.)
-        {
-            for(int i=0; i<FEATURES; i++)
-            {
-                class1[i] = center4Class1[i];
-            }
-        }
-        else
-        {
-            findFlag = true;
-            break;
-        }
-        
-        if(checkSumClass2 != 0.)
-        {
-            for(int i=0; i<FEATURES; i++)
-            {
-                class2[i] = center4Class2[i];
-            }
-        }
-        else
-        {
-            findFlag = true;
-            break;
-            
-        }
-        
-        for(int i = 0; i < FEATURES; i++)
-        {
-            sum4Class1[i] = 0.0;
-            sum4Class2[i] = 0.0;
-        }
-        
-        count4Class1 = 0;
-        count4Class2 = 0;
-        
-    }
-    
-    if(findFlag == true)
-    {
-        
-    }
-    
-    double sumClass1 = 0.;
-    double sumClass2 = 0.;
-    
-    sumClass1 = class1[0] * 100. + class1[1] + class1[2] + class1[3];
-    sumClass2 = class2[0] * 100. + class2[1] + class2[2] + class2[3];
-    
-    if(abs(sumClass1 - sumClass2) < 5. )
-    {
-        //cout<<" no Cluster " <<endl;   //
-        return 2;
-    }
-    
-    it = negativeInfo.begin();
-    double sumData = 0.;
-    double euDistance = 0.;
-    double lineDistance = 0.;
-    Vec4i temp;
-    Vec4i max;
-    Vec4i min;
-    
-    while(it != negativeInfo.end())
-    {
-        sumData = (*it).getRho() + (*it).getSlope() * 100.0 + (*it).getIntX() + (*it).getIntY();
-        if( abs(sumClass1 - sumData) < abs(sumClass2 - sumData))
-        {
-            
-            temp[0] = (*it).getPoint1X();
-            temp[1] = (*it).getPoint1Y();
-            temp[2] = (*it).getPoint2X();
-            temp[3] = (*it).getPoint2Y();
-            
-            //largest line
-            lineDistance = sqrt(pow(temp[0]-temp[2],2) + pow(temp[1]-temp[3],2));
-            if(lineDistance > euDistance)
-            {
-                euDistance = lineDistance;
-                max = temp;
-                tempNegative.clear();
-                tempNegative.push_back((*it));
-            }
-        }
-        
-        ++it;
-    }
-    
-    negativeLines.push_back(max);
-    
-    negativeInfo.clear();
-    negativeInfo.push_back(tempNegative.front());
-    return 3;
-    
-}
-
-void Lane::calRipple(int result)
-{
-    
 }
 
 double Lane::findMedianRho(int direction)

@@ -27,7 +27,7 @@ using namespace std;
 using namespace cv;
 
 #define TESTNUM 50
-#define FEATURES 4
+//#define FEATURES 4
 
 class LineInfo
 {
