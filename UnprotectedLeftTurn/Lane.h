@@ -11,26 +11,7 @@
 #include "MetaHeader.h"
 #include <list>
 
-#define LANECROP_X 500
-#define LANECROP_Y 460
-#define LANECROP_W 360
-#define LANECROP_H 180
 
-#define WHITE_HUE_MIN 0
-#define WHITE_SAT_MIN 0
-#define WHITE_INT_MIN 235
-
-#define WHITE_HUE_MAX 255
-#define WHITE_SAT_MAX 255
-#define WHITE_INT_MAX 255
-
-#define YELLOW_HUE_MIN 10
-#define YELLOW_SAT_MIN 10
-#define YELLOW_INT_MIN 165
-
-#define YELLOW_HUE_MAX 65
-#define YELLOW_SAT_MAX 250
-#define YELLOW_INT_MAX 255
 
 #define TESTNUM 50
 #define FEATURES 4
@@ -38,12 +19,8 @@
 #define BOUNDSIZE 4
 #define DIFF 25.
 
-static double BOUNDPOSIDX = 0;
-static double BOUNDNEGIDX = 0;
-
 static double RHOMAX = 220.0 ;
 static double RHOMIN = 130.0 ;
-//static double MIDRHO = 175.0 ;
 
 static double boundaryCountRight1 = 0;
 static double boundaryCountLeft1 = 0;
@@ -114,8 +91,6 @@ class Lane
 private:
     Mat priorImage;
     Mat currentImage;
-    
-    
     Mat YelloImage;
     Mat WhiteImage;
     Mat bwYellowWhiteImage;
@@ -129,10 +104,7 @@ private:
     double maxGap;
     
     double bkRhoPos;
-    double ripplePos;
-    
     double bkRhoNeg;
-    double rippleNeg;
     
     double currentRhoPos;
     double currentRhoNeg;
@@ -160,9 +132,7 @@ public:
     Mat& getWhiteImage() { return this->WhiteImage;}
     Mat& getbwYellowWhiteImage() { return this->bwYellowWhiteImage;}
     Mat& getLaneCropImage() { return this->laneCropImage;}
-    double getRipplePos() { return this->ripplePos;}
     double getBkRhoPos() { return this->bkRhoPos;}
-    double getRippleNeg() { return this->rippleNeg;}
     double getBkRhoNeg() { return this->bkRhoNeg;}
     double getCurrentRhoPos() { return this->currentRhoPos; }
     double getCurrentRhoNeg() { return this->currentRhoNeg; }
@@ -175,15 +145,13 @@ public:
     void setWhiteImage(Mat white) { white.copyTo(this->WhiteImage);}
     void setbwYellowWhiteImage(Mat bw) { bw.copyTo(this->bwYellowWhiteImage);}
     void setLaneCropImage(Mat crop) { crop.copyTo(this->laneCropImage);}
-    void setRipplePos(double ripple) { this->ripplePos = ripple; }
-    void setRipplePosAdd(double ripple) { this->ripplePos +=ripple;}
-    void setRippleNeg(double ripple) { this->rippleNeg = ripple; }
-    void setRippleNegAdd(double ripple) { this->rippleNeg +=ripple;}
     void setCurrentRhoPos(double d) { this->currentRhoPos = d; }
     void setCurrentRhoNeg(double d) { this->currentRhoNeg =d; }
     
     void setBkRhoPos(double rho) { this->bkRhoPos = rho;}
     void setBkRhoNeg(double rho) { this->bkRhoNeg = rho; }
+    bool isDetectedStopLine() { return (horizontalLines.size() == 0)? false: true;}
+    
     void setBoundRhoPos(double rho){
         if(rho == -0.1) return;
         if(this->boundRhoPos.size() < BOUNDSIZE)
@@ -231,6 +199,7 @@ public:
         bandLeftMin = RHOMIN;
         bandRightMin = RHOMIN;
     }
+    
     vector<Vec4i> findLines(Mat& image, bool stop = false);
     void drawLine(Mat& image);
     void filterLine(Mat& image,double myX, double myY);
@@ -240,7 +209,6 @@ public:
     int kmeansNegative();
     
     double findMedianRho(int direction);
-    void calRipple(int result);
     
     int laneChecker();
     
