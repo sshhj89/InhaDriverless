@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FBE24F051BCF5BE400F5CB1D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
+		FB64AC051BE3C5E700C50780 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
+		FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */; };
+		FB81B5661BDE82E700F93084 /* UV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5631BDE82E700F93084 /* UV.cpp */; };
 		FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */; };
 		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
 		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
@@ -26,7 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB64AC021BE3C11C00C50780 /* cnn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cnn.cpp; sourceTree = "<group>"; };
+		FB64AC031BE3C11C00C50780 /* cnn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cnn.h; sourceTree = "<group>"; };
 		FB6E4B051B82D67E005B70F6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrafficPlate.cpp; sourceTree = "<group>"; };
+		FB81B5621BDE82E700F93084 /* TrafficPlate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficPlate.h; sourceTree = "<group>"; };
+		FB81B5631BDE82E700F93084 /* UV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UV.cpp; sourceTree = "<group>"; };
+		FB81B5641BDE82E700F93084 /* UV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UV.h; sourceTree = "<group>"; };
 		FBE24F061BCF5C8B00F5CB1D /* MetaHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaHeader.h; sourceTree = "<group>"; };
 		FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lane.cpp; sourceTree = "<group>"; };
 		FBE24F0B1BCF5D5600F5CB1D /* Lane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lane.h; sourceTree = "<group>"; };
@@ -102,6 +110,10 @@
 		FBFDAB861B7E508F004CFCC1 /* UnprotectedLeftTurn */ = {
 			isa = PBXGroup;
 			children = (
+				FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */,
+				FB81B5621BDE82E700F93084 /* TrafficPlate.h */,
+				FB81B5631BDE82E700F93084 /* UV.cpp */,
+				FB81B5641BDE82E700F93084 /* UV.h */,
 				FBE4678D1BC6C4F000F3DB6D /* MovingObject */,
 				FBB92AD11BA5C4500091A940 /* DriverlessCar */,
 				FB6E4B041B82D658005B70F6 /* LineDetection */,
@@ -109,6 +121,8 @@
 				FBE24F061BCF5C8B00F5CB1D /* MetaHeader.h */,
 				FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */,
 				FBE24F0B1BCF5D5600F5CB1D /* Lane.h */,
+				FB64AC021BE3C11C00C50780 /* cnn.cpp */,
+				FB64AC031BE3C11C00C50780 /* cnn.h */,
 			);
 			path = UnprotectedLeftTurn;
 			sourceTree = "<group>";
@@ -169,8 +183,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */,
 				FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */,
-				FBE24F051BCF5BE400F5CB1D /* main.cpp in Sources */,
+				FB64AC051BE3C5E700C50780 /* main.cpp in Sources */,
+				FB81B5661BDE82E700F93084 /* UV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
