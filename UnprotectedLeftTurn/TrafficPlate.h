@@ -31,12 +31,13 @@ private:
     list<int> tplR;
     
     int grp[3];
+    Mat origin;
     
 public:
     TrafficPlate() { seqImage = false; tpl.clear(); tplR.clear();}
     
-    void findCircles(const Mat& image);
-    void drawCircles(const Mat& image);
+    void findCircles( Mat& image);
+    void drawCircles( Mat& image);
     
     void findSquares( Mat& image);
     void drawSquares( Mat& image);
@@ -61,6 +62,9 @@ public:
     void filterLights();
     void setSeqImage() { seqImage = !seqImage;}
     bool getSeqImage() { return this->seqImage;}
+    void setOrigin(Mat ori) {ori.copyTo(origin);}
+    Mat getOrigin() { return this->origin;}
+    
     
 };
 

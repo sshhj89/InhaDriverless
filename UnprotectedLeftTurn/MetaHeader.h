@@ -57,7 +57,7 @@
 #define YELLOW_SAT_MAX 250
 #define YELLOW_INT_MAX 255
 
-#define RED_HUE_MIN 0
+#define RED_HUE_MIN 2
 #define RED_SAT_MIN 0
 #define RED_INT_MIN 240
 
@@ -75,7 +75,7 @@
 
 #define LIGHTS_HUE_MIN 0
 #define LIGHTS_SAT_MIN 0
-#define LIGHTS_INT_MIN 240
+#define LIGHTS_INT_MIN 200
 
 #define LIGHTS_HUE_MAX 40
 #define LIGHTS_SAT_MAX 255

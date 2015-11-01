@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB64AC051BE3C5E700C50780 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
 		FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */; };
 		FB81B5661BDE82E700F93084 /* UV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5631BDE82E700F93084 /* UV.cpp */; };
 		FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */; };
+		FBEA90AD1BE6601900E72B8C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
 		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
 		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
 /* End PBXBuildFile section */
@@ -185,7 +185,7 @@
 			files = (
 				FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */,
 				FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */,
-				FB64AC051BE3C5E700C50780 /* main.cpp in Sources */,
+				FBEA90AD1BE6601900E72B8C /* main.cpp in Sources */,
 				FB81B5661BDE82E700F93084 /* UV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

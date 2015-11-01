@@ -8,30 +8,30 @@
 
 #include "TrafficPlate.h"
 
-void TrafficPlate::findCircles(const Mat& image)
+void TrafficPlate::findCircles( Mat& image)
 {
-    if(image.channels() == 3)
-        cvtColor( image, image, CV_BGR2GRAY );
-    
-    GaussianBlur( image, image, Size(5, 5), 1.5 );
+//    if(image.channels() == 3)
+//        cvtColor( image, image, CV_RGB2GRAY );
+//    
+//    GaussianBlur( image, image, Size(7, 7), 2.5 );
     
     if(seqImage == false)
     {
        // this->prevCircles.clear();
-        HoughCircles( image, prevCircles, CV_HOUGH_GRADIENT, 2, 20, 200, 10, 2, 7);
+        HoughCircles( image, prevCircles, CV_HOUGH_GRADIENT, 2, 10, 200, 10, 1, 7);
         cout<<"call1"<<endl;
     }
     else if (seqImage == true)
     {
        // this->curCircles.clear();
-        HoughCircles( image, curCircles, CV_HOUGH_GRADIENT, 2, 20, 200, 10, 2, 7);
+        HoughCircles( image, curCircles, CV_HOUGH_GRADIENT, 2, 10, 200, 10, 1, 7);
         cout<<"call2"<<endl;
         filterLights();
     }
     
 }
 
-void TrafficPlate::drawCircles(const Mat& image)
+void TrafficPlate::drawCircles( Mat& image)
 {
     list<Point>::const_iterator tpl_it = tpl.begin();
     list<int>::const_iterator tplr_it = tplR.begin();
@@ -40,10 +40,11 @@ void TrafficPlate::drawCircles(const Mat& image)
     {
         Point center(cvRound((*tpl_it).x), cvRound((*tpl_it).y));
         int radius = cvRound((*tplr_it));
-        circle( image, center, 3, Scalar(0,255,0), -1, 8, 0 );
-        circle( image, center, radius, Scalar(255,0,0), 3, 8, 0 );
+        circle( image, center, 3, Scalar(255,255,255), -1, 8, 0 );
+        circle( image, center, radius, Scalar(255,255,255), 3, 8, 0 );
         tpl_it++;
         tplr_it++;
+
         
     }
 }
@@ -64,21 +65,21 @@ void TrafficPlate::filterLights()
             Point curCenter(cvRound(curCircles[j][0]), cvRound(curCircles[j][1]));
             double ud = sqrt(pow((curCenter.x - prevCenter.x),2) + pow((curCenter.y - prevCenter.y),2));
             
-            if(0 < ud && ud <= 5)
-            {
-                cout<<"ud : " << ud<<endl;
-                cout<<"curCenter: "<< curCenter.x <<", "<<curCenter.y<<endl;
+//            if(0 < ud && ud <= 5)
+//            {
+//                cout<<"ud : " << ud<<endl;
+//                cout<<"curCenter: "<< curCenter.x <<", "<<curCenter.y<<endl;
+//                tpl.push_back(curCenter);
+//                tplR.push_back(cvRound(curCircles[i][2]));
+//                //cvWaitKey(1000);
+//            }
+//            else if(ud == 0 && totalDiff[0] < 1.3)
+//            {
+//                cout<<"car stop??" <<endl;
+//                cout<<"curCenter: "<< curCenter.x <<", "<<curCenter.y<<endl;
                 tpl.push_back(curCenter);
                 tplR.push_back(cvRound(curCircles[i][2]));
-                //cvWaitKey(1000);
-            }
-            else if(ud == 0 && totalDiff[0] < 1.3)
-            {
-                cout<<"car stop??" <<endl;
-                cout<<"curCenter: "<< curCenter.x <<", "<<curCenter.y<<endl;
-                tpl.push_back(curCenter);
-                tplR.push_back(cvRound(curCircles[i][2]));
-            }
+//            }
         }
        // cvWaitKey(1000);
     }
@@ -89,13 +90,13 @@ void TrafficPlate::filterLights()
 void TrafficPlate::findSquares( Mat& image)
 {
     this->squares.clear();
-    int  N = 3;
+    int  N = 11;
     Mat pyr, timg, gray0(image.size(), CV_8U), gray;
     image.copyTo(timg);
 
-       
-    pyrDown(image, pyr, Size(image.cols/2, image.rows/2));
-    pyrUp(pyr, timg, image.size());
+//       
+//    pyrDown(image, pyr, Size(image.cols/2, image.rows/2));
+//    pyrUp(pyr, timg, image.size());
     vector<vector<Point> > contours;
     for( int c = 1; c < 3; c++ ) //
     {
@@ -116,16 +117,15 @@ void TrafficPlate::findSquares( Mat& image)
             {
                
                 Canny(gray0, gray, 100,350, 3);
-                
                 dilate(gray, gray, Mat(), Point(-1,-1)); // remove hole
-               // imshow("gray0",gray);
+                //imshow("gray0",gray);
               
             }
             else
             {
                 
                 gray = gray0 >= (l+1)*255/N;
-             //   bitwise_not(gray, lights, gray);
+               // bitwise_not(gray, lights, gray);
 //                if(l == 1)
 //                    imshow("l1",gray);
 //                else if (l ==2)
@@ -136,7 +136,7 @@ void TrafficPlate::findSquares( Mat& image)
 //                    imshow("l4",gray);
 //                else
 //                    imshow("l5",gray);
-                    
+                
             }
             
             // find contours and store them all as a listy
@@ -161,7 +161,68 @@ void TrafficPlate::findSquares( Mat& image)
                     }
                     
                     if( maxCosine < 0.3 )
+                    {
                         squares.push_back(approx);
+                        Rect rect = boundingRect(Mat(approx));
+                        Mat data = this->origin(Rect(rect.tl(),rect.br()));
+                        Mat exp1;
+                        imshow("rect",data);
+                        //cvWaitKey(1000);
+                        
+                        Mat db_original = imread("/Users/sonhojun/Downloads/signals2.png");
+                        resize(data, data, Size(db_original.cols,db_original.rows));
+                        Mat grayRect(image.size(), CV_8U);
+                        Mat edgeRect;
+                        Mat grayRectrp;
+                        
+                        cvtColor(data, data, CV_RGB2HSV);
+                        imshow("data",data);
+                        for( int c = 1; c < 3; c++ ) //
+                        {
+                            int ch[] = {c,0};
+                            mixChannels(&data, 1, &grayRect, 1, ch, 1);
+                            Mat dividedCh;
+                            grayRect.copyTo(dividedCh);
+                            
+                            if( c== 1)
+                                imshow("chrect1",dividedCh);
+                            else
+                                imshow("chrect2", dividedCh);
+                            
+                            for( int l = 0; l < N; l++ )
+                            {
+                                
+                                if( l == 0 )
+                                {
+                                    
+                                    Canny(grayRect, edgeRect, 100,350, 3);
+                                    
+                                    dilate(edgeRect, edgeRect, Mat(), Point(-1,-1)); // remove hole
+                                    imshow("edgeRect",edgeRect);
+                                    
+                                }
+                                else
+                                {
+                                    
+                                    grayRectrp = grayRect >= (l+1)*255/N;
+                                    // bitwise_not(gray, lights, gray);
+                                    if(l == 1)
+                                        imshow("l1",grayRectrp);
+                                    else if (l ==2)
+                                        imshow("l2",grayRectrp);
+                                    else if(l==3)
+                                        imshow("l3",grayRectrp);
+                                    else if(l==4)
+                                        imshow("l4",grayRectrp);
+                                    else
+                                        imshow("l5",grayRectrp);
+                                    
+                                }
+
+                            }
+                            
+                        }
+                    }
                 }
             }
         }

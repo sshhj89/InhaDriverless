@@ -27,6 +27,7 @@ private:
     int state; //0: line detecting 1: detected stop Line
     bool possibleLine;
     int onLane;
+
     
  
 public:
@@ -45,6 +46,7 @@ public:
 
     void setPossibleLine(bool b ) { this->possibleLine = b;}
     void setOnLane(int l) { this->onLane = l;}
+   
     
 };
 

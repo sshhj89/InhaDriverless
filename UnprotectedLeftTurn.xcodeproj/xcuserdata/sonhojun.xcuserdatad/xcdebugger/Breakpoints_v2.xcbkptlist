@@ -39,20 +39,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "UnprotectedLeftTurn/main.cpp"
-            timestampString = "466574448.29386"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1"
-            endingLineNumber = "1">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "UnprotectedLeftTurn/Lane.cpp"
             timestampString = "466806849.925364"
             startingColumnNumber = "9223372036854775807"
@@ -100,11 +86,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnprotectedLeftTurn/main.cpp"
-            timestampString = "467921629.522557"
+            timestampString = "468093195.898136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "main()"
             landmarkType = "7">
          </BreakpointContent>
@@ -116,11 +102,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnprotectedLeftTurn/main.cpp"
-            timestampString = "467921629.522557"
+            timestampString = "468093195.898136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "main()"
             landmarkType = "7">
          </BreakpointContent>
