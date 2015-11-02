@@ -131,7 +131,7 @@ int main()
             car.modifyOnLane(chLane);
            
             putTextonImage(to_string(chLane), laneCrop);
-            imshow("line",laneCrop);
+       //     imshow("line",laneCrop);
             
             cout<<"currentLane : " << car.getOnLane() << endl;
             cout<<"possible line: " << car.getPossibleLine() << endl;
@@ -147,8 +147,6 @@ int main()
             vector<vector<Point>> newCircles;
             vector<Point> heightwidth;
             Mat plateCrop;
-            
-         
             
             if(car.getTrafficFinder().getSeqImage() == false)
             {
@@ -185,29 +183,30 @@ int main()
 //            imshow("trhes",temp);
             
             cvtColor(plateCrop, redlights, CV_BGR2HSV);
-            imshow("HSV",redlights);
+             cvtColor(redlights, redlights, CV_BGR2HSV);
+           // imshow("HSV",redlights);
             inRange(redlights,Scalar(RED_HUE_MIN, RED_SAT_MIN, RED_INT_MIN), Scalar(RED_HUE_MAX, RED_SAT_MAX, RED_INT_MAX),redlights);
 //            
            //medianBlur(lights, lights, 5);
             dilate(redlights, redlights, Mat(), Point(-1,-1));
             dilate(redlights,redlights,Mat(),Point(1,1));
             imshow("red",redlights);
+//            
             car.getTrafficFinder().findCircles(redlights);
             car.getTrafficFinder().drawCircles(canvas);
-            
+//
             cvtColor(plateCrop, greenHsv, CV_BGR2HSV);
+           // imshow("HSV1",greenHsv);
             cvtColor(greenHsv, greenHsv, CV_BGR2HSV);
-            imshow("HSV",greenHsv);
+           // imshow("HSV2",greenHsv);
             inRange(greenHsv,Scalar(LIGHTS_HUE_MIN, LIGHTS_SAT_MIN, LIGHTS_INT_MIN), Scalar(LIGHTS_HUE_MAX, LIGHTS_SAT_MAX, LIGHTS_INT_MAX),greenHsv);
             //
             medianBlur(greenHsv, greenHsv, 5);
             dilate(greenHsv, greenHsv, Mat(), Point(-1,-1));
             dilate(greenHsv,greenHsv,Mat(),Point(1,1));
-            imshow("greenHSV",greenHsv);
+           //imshow("greenHSV",greenHsv);
 
-           
-            
-            
+    
             Mat image_r( plateCrop.rows, plateCrop.cols, CV_8UC1);
             Mat image_g( plateCrop.rows, plateCrop.cols, CV_8UC1);
             Mat image_b( plateCrop.rows, plateCrop.cols, CV_8UC1);
@@ -216,10 +215,10 @@ int main()
             int from_to[] = { 0,0, 1,1, 2,2 };
             mixChannels( &plateCrop, 1, out, 3, from_to, 3 );
         
-            imshow( "red di", image_r );
-            imshow( "green di", image_g );
-            imshow( "blue di", image_b );
-            
+//            imshow( "red di", image_r );
+//            imshow( "green di", image_g );
+//            imshow( "blue di", image_b );
+//            
             double minVal; double maxVal; Point minLoc; Point maxLoc;
             Point matchLoc;
             
@@ -250,9 +249,10 @@ int main()
             imshow( "green", image_g );
             dilate(image_g, image_g, Mat(), Point(-1,-1));
            // dilate(greenHsv,greenHsv,Mat(),Point(1,1));
+            
             car.getTrafficFinder().findCircles(image_g);
             car.getTrafficFinder().drawCircles(canvas);
-
+//
             
             //cvtColor(plateCrop, greenlights, CV_BGR2HSV);
             //imshow("HSV",greenlights);
@@ -294,9 +294,11 @@ int main()
 //            
 //
 ////
-//            cvtColor(plateCrop, bkPlateCrop, CV_RGB2HSV);
-//            car.getTrafficFinder().findSquares(bkPlateCrop);
-//            car.getTrafficFinder().drawSquares(canvas);
+                      
+            cvtColor(plateCrop, bkPlateCrop, CV_BGR2HSV);
+            car.getTrafficFinder().findSquares(bkPlateCrop);
+           // cvWaitKey(1000);
+            car.getTrafficFinder().drawSquares(canvas);
             imshow("circles", canvas);
             
 //            car.getTrafficFinder().featureDetect(bkPlateCrop, car.getTrafficFinder().getSquares());

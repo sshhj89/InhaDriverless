@@ -87,7 +87,7 @@ void TrafficPlate::filterLights()
 }
 
 
-void TrafficPlate::findSquares( Mat& image)
+void TrafficPlate::findSquares(Mat& image)
 {
     this->squares.clear();
     int  N = 11;
@@ -98,7 +98,7 @@ void TrafficPlate::findSquares( Mat& image)
 //    pyrDown(image, pyr, Size(image.cols/2, image.rows/2));
 //    pyrUp(pyr, timg, image.size());
     vector<vector<Point> > contours;
-    for( int c = 1; c < 3; c++ ) //
+    for( int c = 0; c < 3; c++ ) //
     {
         int ch[] = {c, 0};
         mixChannels(&timg, 1, &gray0, 1, ch, 1);
@@ -148,7 +148,7 @@ void TrafficPlate::findSquares( Mat& image)
                 approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true)*0.1, true);
                 
                 if( approx.size() == 4 &&
-                   fabs(contourArea(Mat(approx))) > 100 && fabs(contourArea(Mat(approx))) < 600 &&
+                   fabs(contourArea(Mat(approx))) > 100 && fabs(contourArea(Mat(approx))) < 500 &&
                    isContourConvex(Mat(approx)) )
                 {
                     double maxCosine = 0;
@@ -166,17 +166,22 @@ void TrafficPlate::findSquares( Mat& image)
                         Rect rect = boundingRect(Mat(approx));
                         Mat data = this->origin(Rect(rect.tl(),rect.br()));
                         Mat exp1;
-                        imshow("rect",data);
-                        //cvWaitKey(1000);
-                        
+                       // imshow("rect",data);
+                       // cvWaitKey(1000);
                         Mat db_original = imread("/Users/sonhojun/Downloads/signals2.png");
+//                        if(db_original.channels() == 3)
+//                            cvtColor(db_original, db_original, CV_RGB2GRAY);
+//                        
+//                        
+//                        imshow("db_original",db_original);
+//                        //cvtColor(data, data, CV_RGB2HSV);
+                        
                         resize(data, data, Size(db_original.cols,db_original.rows));
-                        Mat grayRect(image.size(), CV_8U);
+                        Mat grayRect(data.size(), CV_8U);
                         Mat edgeRect;
                         Mat grayRectrp;
                         
-                        cvtColor(data, data, CV_RGB2HSV);
-                        imshow("data",data);
+                        //imshow("data",data);
                         for( int c = 1; c < 3; c++ ) //
                         {
                             int ch[] = {c,0};
@@ -184,10 +189,10 @@ void TrafficPlate::findSquares( Mat& image)
                             Mat dividedCh;
                             grayRect.copyTo(dividedCh);
                             
-                            if( c== 1)
-                                imshow("chrect1",dividedCh);
-                            else
-                                imshow("chrect2", dividedCh);
+//                            if( c== 1)
+//                                imshow("chrect1",dividedCh);
+//                            else
+//                                imshow("chrect2", dividedCh);
                             
                             for( int l = 0; l < N; l++ )
                             {
@@ -196,9 +201,9 @@ void TrafficPlate::findSquares( Mat& image)
                                 {
                                     
                                     Canny(grayRect, edgeRect, 100,350, 3);
-                                    
                                     dilate(edgeRect, edgeRect, Mat(), Point(-1,-1)); // remove hole
-                                    imshow("edgeRect",edgeRect);
+                                    edgeRect.copyTo(grayRectrp);
+                                   // imshow("edgeRect",edgeRect);
                                     
                                 }
                                 else
@@ -206,19 +211,120 @@ void TrafficPlate::findSquares( Mat& image)
                                     
                                     grayRectrp = grayRect >= (l+1)*255/N;
                                     // bitwise_not(gray, lights, gray);
-                                    if(l == 1)
-                                        imshow("l1",grayRectrp);
-                                    else if (l ==2)
-                                        imshow("l2",grayRectrp);
-                                    else if(l==3)
-                                        imshow("l3",grayRectrp);
-                                    else if(l==4)
-                                        imshow("l4",grayRectrp);
-                                    else
-                                        imshow("l5",grayRectrp);
+//                                    if(l == 1)
+//                                        imshow("l1",grayRectrp);
+//                                    else if (l ==2)
+//                                        imshow("l2",grayRectrp);
+//                                    else if(l==3)
+//                                        imshow("l3",grayRectrp);
+//                                    else if(l==4)
+//                                        imshow("l4",grayRectrp);
+//                                    else
+//                                        imshow("l5",grayRectrp);
                                     
                                 }
-
+                                
+                               
+                                vector<vector<Point>> contours4Plate;
+                                findContours(grayRectrp, contours4Plate, CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
+                                Mat result(grayRectrp.size(),CV_8U,Scalar(255));
+                                
+                                int cmin = 50;
+                                int cmax = 1000;
+                                
+                                vector<vector<Point>>::const_iterator itc = contours4Plate.begin();
+                                int maxIdx = 0;
+                                
+                                while(itc != contours4Plate.end())
+                                {
+                                    if(itc->size() < cmin || itc->size() > cmax)
+                                        itc = contours4Plate.erase(itc);
+                                    else
+                                    {
+                                        maxIdx++;
+                                        itc++;
+                                    }
+                                    
+                                }
+                                
+                                if(contours4Plate.size() !=4)
+                                    continue;
+                                
+                                Point plateArrow;
+                                vector<Point> centers;
+                                
+                                if(contours4Plate.size() == 4)
+                                {
+                                    cout<<"ppossible plate: "<< maxIdx<<endl;
+                                    for(int i=0; i< contours4Plate.size(); i++)
+                                    {
+                                        if( i == maxIdx-1)
+                                        {
+                                            vector<Point> poly;
+                                            approxPolyDP(Mat(contours4Plate[maxIdx-1]), poly, 5, true);
+                                            vector<Point>::const_iterator pit = poly.begin();
+                                            while(pit != (poly.end()-1))
+                                            {
+                                                line(result,*pit,*(pit+1),Scalar(0),2);
+                                                ++pit;
+                                            }
+                                            
+                                            line(result,*(poly.begin()),*(poly.end()-1),Scalar(20),2);
+                                            Moments mom = moments(Mat(contours4Plate[maxIdx-1]));
+                                            //circle(result, Point(mom.m10/mom.m00,mom.m01/mom.m00),2,Scalar(0),2);
+                                            plateArrow = Point(mom.m10/mom.m00,mom.m01/mom.m00);
+                                        }
+                                        else
+                                        {
+                                            float rad;
+                                            Point2f center;
+                                            minEnclosingCircle(Mat(contours4Plate[i]), center, rad);
+//                                            if(rad > 10)
+//                                                continue;
+                                            
+                                            Moments mom = moments(Mat(contours4Plate[i]));
+                                            circle(result, Point(mom.m10/mom.m00,mom.m01/mom.m00),2,Scalar(0),2);
+                                            
+                                            circle(result,Point(center),static_cast<int>(rad),Scalar(0),2);
+                                            centers.push_back(Point(mom.m10/mom.m00,mom.m01/mom.m00));
+                                        }
+                                    }
+                                    
+                                    if(plateArrow.y > result.rows* 0.3)
+                                        continue;
+                                    
+                                    bool isPlate = true;
+                                    int sumY=0;
+                                    for(int i=0;i<centers.size();i++)
+                                    {
+                                        if(plateArrow.y > centers[i].y)
+                                        {
+                                            isPlate = false;
+                                            break;
+                                        }
+                                        
+                                        if(centers[i].y < result.rows* 0.7)
+                                            isPlate = false;
+                                        
+                                        if(abs(centers[i].y - centers[((i+1) == 3)? 0:(i+1)].y) > 5)
+                                            isPlate = false;
+                                            
+                                    }
+                                    
+                                    
+//                                    if(abs(sumY) < 5)
+//                                        isPlate = true;
+//                                    else
+//                                        isPlate = false;
+                                    
+                                    if(isPlate == true)
+                                    {
+                                        drawContours(result, contours4Plate, -1, Scalar(0),2);
+                                        imshow("plate",result);
+                                        return;
+                                    }
+                                }
+                                
                             }
                             
                         }

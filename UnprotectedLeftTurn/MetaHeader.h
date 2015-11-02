@@ -32,9 +32,9 @@
 
 #define PLATEDETECTED 3
 #define PLATECROP_X 640
-#define PLATECROP_Y 180
+#define PLATECROP_Y 200
 #define PLATECROP_W 180
-#define PLATECROP_H 200
+#define PLATECROP_H 180
 
 #define LANECROP_X 500
 #define LANECROP_Y 460
