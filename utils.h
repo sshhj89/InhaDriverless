@@ -21,7 +21,7 @@ public:
         if (unset) {
             oldValue = value;
 			unset = false;
-        }
+        } 
         double newValue = oldValue + alpha * (value - oldValue);
         oldValue = newValue;
     }
