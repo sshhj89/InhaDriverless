@@ -10,7 +10,7 @@
 		FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */; };
 		FB81B5661BDE82E700F93084 /* UV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5631BDE82E700F93084 /* UV.cpp */; };
 		FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */; };
-		FBEA90AD1BE6601900E72B8C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
+		FBEE7AAC1BFF800C00B16072 /* stereoCali.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */; };
 		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
 		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,12 @@
 		FBEC252E1B91970900AFB2CD /* DriverlessCar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverlessCar.h; sourceTree = "<group>"; };
 		FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LineFinder.cpp; sourceTree = "<group>"; };
 		FBEC25301B91A37400AFB2CD /* LineFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineFinder.h; sourceTree = "<group>"; };
+		FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stereoCali.cpp; sourceTree = "<group>"; };
+		FBEE7AA01BFE5B3F00B16072 /* stereoMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stereoMap.cpp; sourceTree = "<group>"; };
 		FBEFAB1D1B88C49600127C97 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		FBF0FC971BF3C09C004EECD2 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		FBF0FC981BF3C595004EECD2 /* haardetection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = haardetection.cpp; sourceTree = "<group>"; };
+		FBF1CB401BFA6FC500054A65 /* depthMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = depthMap.cpp; sourceTree = "<group>"; };
 		FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_xfeatures2d.3.0.0.dylib; sourceTree = "<group>"; };
 		FBFDAB841B7E508F004CFCC1 /* UnprotectedLeftTurn */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnprotectedLeftTurn; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -123,6 +128,11 @@
 				FBE24F0B1BCF5D5600F5CB1D /* Lane.h */,
 				FB64AC021BE3C11C00C50780 /* cnn.cpp */,
 				FB64AC031BE3C11C00C50780 /* cnn.h */,
+				FBF0FC971BF3C09C004EECD2 /* utils.h */,
+				FBF0FC981BF3C595004EECD2 /* haardetection.cpp */,
+				FBF1CB401BFA6FC500054A65 /* depthMap.cpp */,
+				FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */,
+				FBEE7AA01BFE5B3F00B16072 /* stereoMap.cpp */,
 			);
 			path = UnprotectedLeftTurn;
 			sourceTree = "<group>";
@@ -185,7 +195,7 @@
 			files = (
 				FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */,
 				FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */,
-				FBEA90AD1BE6601900E72B8C /* main.cpp in Sources */,
+				FBEE7AAC1BFF800C00B16072 /* stereoCali.cpp in Sources */,
 				FB81B5661BDE82E700F93084 /* UV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

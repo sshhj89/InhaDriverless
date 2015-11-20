@@ -113,8 +113,29 @@ void TrafficPlate::filterLights()
         tplR.push_back(radius);
         Mat ele(radius*2,radius,CV_8UC1,Scalar(0));
         
-        Mat greenSquare=temp(Rect(center.x - radius*5,center.y-radius,radius*4,radius*2));  //bound check
+        cout<<"temp x: "<< temp.rows<<", "<<"temp y: "<<temp.cols<<endl;
+        cout<<center.x - radius*5<<", "<<center.y-radius<<", "<<radius*4<<", "<<radius*2<<endl;
+        
+        if(center.y + radius > temp.rows || center.x-radius*5 <= 0)
+        {
+            itc++;
+            continue;
+        }
+        
+        Mat greenSquare;
+        //int n;
+        
+        try
+        {
+            greenSquare=temp(Rect(center.x - radius*5,center.y-radius,radius*4,radius*2));  //bound check
         //imshow("ele", greenSquare);
+        }
+        catch(Exception e)
+        {
+            cout<<e.msg<<endl;
+            itc++;
+            continue;
+        }
         
         double avgGreen = ((sum(greenSquare))[0]) / 255;
         //cout<<avgGreen<<endl;
