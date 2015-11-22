@@ -126,7 +126,7 @@ int main(){
         //we can loop the video by re-opening the capture every time the video reaches its last frame
         
         
-        capture.open("/Users/sonhojun/Downloads/data/driving2.mp4");
+        capture.open("/Users/sonhojun/Downloads/data/plate2.mp4");
         
         if(!capture.isOpened()){
             cout<<"ERROR ACQUIRING VIDEO FEED\n";

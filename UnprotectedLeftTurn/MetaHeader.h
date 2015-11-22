@@ -14,6 +14,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/xfeatures2d.hpp>
+#include <opencv2/features2d.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <opencv2/ml/ml.hpp>
@@ -29,6 +30,10 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/tracking.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/calib3d.hpp>
+#include <opencv2/ccalib.hpp>
+
 
 #define PLATEDETECTED 3
 #define PLATECROP_X 640
