@@ -254,8 +254,8 @@ int main(int argc, char* argv[])
      
         Ptr<StereoBM> sbm = StereoBM::create();
         sbm->setBlockSize(21);
-        sbm->setNumDisparities(112);
-        sbm->setPreFilterSize(5);
+        sbm->setNumDisparities(64);
+        //sbm->setPreFilterSize(5);
 //        sbm->setPreFilterCap(61);
 //        sbm->setMinDisparity(-39);
 //        sbm->setTextureThreshold(507);
@@ -275,10 +275,17 @@ int main(int argc, char* argv[])
         printf("Min disp: %f Max value: %f \n", minVal, maxVal);
         disp.convertTo( disp8, CV_8UC1, 255/(maxVal-minVal));
         
-       // bitwise_and(thresholdImage, disp8, disp8);
-        imshow("disparity", disp8);
-       
+//        bitwise_and(thresholdImage, disp8, disp8);
         
+        //특정 값보다 큰 값만 찾아내기
+        //Threshold
+        imshow("disparity", disp8);
+        
+        Mat XYZ(disp.size(),CV_32FC3);
+        reprojectImageTo3D(disp, XYZ, Q);
+        
+
+
         cvWaitKey (10);
         sbm.release();
         disp.release();
