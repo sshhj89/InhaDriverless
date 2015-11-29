@@ -7,12 +7,14 @@ using namespace std;
 const static int SENSITIVITY_VALUE = 30;
 const static int BLUR_SIZE = 15;
 
+#define W 640
+#define H 480
 int main(int argc, char* argv[])
 
 {
-    int numBoards = 80;
-    int board_w = 9;
-    int board_h = 6;
+    int numBoards = 50;
+    int board_w = 23;
+    int board_h = 18;
     Size board_sz = Size(board_w, board_h);
     int board_n = board_w*board_h;
     
@@ -23,7 +25,7 @@ int main(int argc, char* argv[])
     
     for (int j=0; j<board_n; j++)
     {
-        obj.push_back(Point3f(j/board_w, j%board_w, 3.7f));
+        obj.push_back(Point3f(j/board_w, j%board_w, 4.3f));
     }
     
     Mat img1, img2, gray1, gray2;
@@ -35,69 +37,69 @@ int main(int argc, char* argv[])
     cap2 >> img2;
 
     
-    resize(img1, img1, Size(640, 480),INTER_LINEAR);
-    resize(img2, img2, Size(640, 480),INTER_LINEAR);
+    resize(img1, img1, Size(W, H),INTER_LINEAR);
+    resize(img2, img2, Size(W, H),INTER_LINEAR);
 //
-//    while (success < numBoards)
-//    {
-//        cap1 >> img1;
-//        cap2 >> img2;
-//        cout<<"here"<<endl;
-//        
-//        resize(img1, img1, Size(640, 480),INTER_LINEAR);
-//        resize(img2, img2, Size(640, 480),INTER_LINEAR);
-//        cvtColor(img1, gray1, CV_RGB2GRAY);
-//        cvtColor(img2, gray2, CV_RGB2GRAY);
-//        
-//        found1 = findChessboardCorners(img1, board_sz, corners1, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
-//        found2 = findChessboardCorners(img2, board_sz, corners2, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
-//        
-//        if (found1)
-//        {
-//            cornerSubPix(gray1, corners1, Size(11, 11), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
-//            drawChessboardCorners(gray1, board_sz, corners1, found1);
-//            
-//        }
-//        if (found2)
-//        {
-//            cornerSubPix(gray2, corners2, Size(11, 11), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
-//            drawChessboardCorners(gray2, board_sz, corners2, found2);
-//        }
-//        imshow("image1", gray1);
-//        imshow("image2", gray2);
-//        
-//        if (found1 && found2)
-//        {
-//            
-//            cout<<"k: "<<k<<endl;
-//            k = waitKey(0);
-//        }
-//        if (k == 27)
-//        {
-//            cout<<"27"<<endl;
-//            break;
-//        }
-//        
-//        if (k == ' '&& found1 !=0 && found2 != 0)
-//        {
-//            imagePoints1.push_back(corners1);
-//            imagePoints2.push_back(corners2);
-//            object_points.push_back(obj);
-//            cout<<"Corners stored\n"<<endl;
-//            success++;
-//            
-//            if (success >= numBoards)
-//                
-//            {
-//                
-//                cout<<"success > numBords"<<endl;
-//                break;
-//            }
-//        }
-//    }
-//    
-//    destroyAllWindows();
-//    cout<<"Starting Calibration\n"<<endl;
+    while (success < numBoards)
+    {
+        cap1 >> img1;
+        cap2 >> img2;
+        cout<<"here"<<endl;
+        
+        resize(img1, img1, Size(W, H),INTER_LINEAR);
+        resize(img2, img2, Size(W, H),INTER_LINEAR);
+        cvtColor(img1, gray1, CV_RGB2GRAY);
+        cvtColor(img2, gray2, CV_RGB2GRAY);
+        
+        found1 = findChessboardCorners(img1, board_sz, corners1, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
+        found2 = findChessboardCorners(img2, board_sz, corners2, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
+        
+        if (found1)
+        {
+            cornerSubPix(gray1, corners1, Size(11, 11), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
+            drawChessboardCorners(gray1, board_sz, corners1, found1);
+            
+        }
+        if (found2)
+        {
+            cornerSubPix(gray2, corners2, Size(11, 11), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
+            drawChessboardCorners(gray2, board_sz, corners2, found2);
+        }
+        imshow("image1", gray1);
+        imshow("image2", gray2);
+        
+        if (found1 && found2)
+        {
+            
+            cout<<"k: "<<k<<endl;
+            k = waitKey(0);
+        }
+        if (k == 27)
+        {
+            cout<<"27"<<endl;
+            break;
+        }
+        
+        if (k == ' '&& found1 !=0 && found2 != 0)
+        {
+            imagePoints1.push_back(corners1);
+            imagePoints2.push_back(corners2);
+            object_points.push_back(obj);
+            cout<<"Corners stored\n"<<endl;
+            success++;
+            
+            if (success >= numBoards)
+                
+            {
+                
+                cout<<"success > numBords"<<endl;
+                break;
+            }
+        }
+    }
+    
+    destroyAllWindows();
+    cout<<"Starting Calibration\n"<<endl;
     
     double mCM1[]={608.065587, 0, 320.123905,
         0, 610.699122, 245.926972,
@@ -118,59 +120,59 @@ int main(int argc, char* argv[])
     float mD2[]={0.108873, -0.204973, 0.001125, -0.000703};
     Mat D2(1,4,CV_32F,mD2);
     
-    float mR[]={0.9850133312900513, -0.0107517622973958, -0.1721427802388931,
-        0.01227259831131613, 0.9998944772646953, 0.007772880177306563,
-        0.1720410431018268, -0.00976902979123225, 0.9850413420488368};
-    
-    Mat R(3,3,CV_64F,mR);
-    
-    
-    
-    float mT[]={8.644243780565141,
-        0.02341475393989038,
-        0.2138342847539209};
-    
-    Mat T(3,1,CV_64F,mT);
-    
-    
-    
-    float mE[]={0.001403996409818889, -0.2140404598040849, 0.02140239237150064,
-        -1.276535095665421, 0.08214677961430715, -8.551747522893132,
-        0.08302348684430044, 8.643583366185389, 0.07122135197158262};
-    
-    Mat E(3,3,CV_64F,mE);
-    
-    
-    
-    float mF[]={-1.690145323570995e-08, 1.897521461321854e-06, -0.0006169670461323689,
-        1.131679843321592e-05, -5.363078258259269e-07, 0.04259616263976543,
-        -0.003346669136960732, -0.04644713047577688, 1};
-    
-    Mat F(3,3,CV_64F,mF);
+//    float mR[]={0.9850133312900513, -0.0107517622973958, -0.1721427802388931,
+//        0.01227259831131613, 0.9998944772646953, 0.007772880177306563,
+//        0.1720410431018268, -0.00976902979123225, 0.9850413420488368};
+//    
+//    Mat R(3,3,CV_64F,mR);
+//    
+//    
+//    
+//    float mT[]={8.644243780565141,
+//        0.02341475393989038,
+//        0.2138342847539209};
+//    
+//    Mat T(3,1,CV_64F,mT);
+//    
+//    
+//    
+//    float mE[]={0.001403996409818889, -0.2140404598040849, 0.02140239237150064,
+//        -1.276535095665421, 0.08214677961430715, -8.551747522893132,
+//        0.08302348684430044, 8.643583366185389, 0.07122135197158262};
+//    
+//    Mat E(3,3,CV_64F,mE);
+//    
+//    
+//    
+//    float mF[]={-1.690145323570995e-08, 1.897521461321854e-06, -0.0006169670461323689,
+//        1.131679843321592e-05, -5.363078258259269e-07, 0.04259616263976543,
+//        -0.003346669136960732, -0.04644713047577688, 1};
+//    
+//    Mat F(3,3,CV_64F,mF);
     
     //    Mat CM1 = Mat::eye(3, 3, CV_64F);
     //    Mat CM2 = Mat::eye(3, 3, CV_64F);
     //    Mat D1, D2; //k1,k2,p1,p1 4*1
     
-//    Mat R, T, E, F;
-//    cout<<"size: " <<img1.size()<<endl;
-//    
-//    double rms = stereoCalibrate(object_points, imagePoints1, imagePoints2,
-//                                 CM1, D1, CM2, D2, img1.size(), R, T, E, F,
-//                                 CV_CALIB_SAME_FOCAL_LENGTH | CV_CALIB_ZERO_TANGENT_DIST| CV_CALIB_USE_INTRINSIC_GUESS /*| CV_CALIB_FIX_INTRINSIC*/, cvTermCriteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS, 100, 1e-5)
-//                                 );
-//    
-//    cout<<"Error: " <<rms<<endl;
+    Mat R, T, E, F;
+    cout<<"size: " <<img1.size()<<endl;
     
-    //    FileStorage fs1("mystereocalib.yml", FileStorage::WRITE);
-    //    fs1 << "CM1" << CM1;
-    //    fs1 << "CM2" << CM2;
-    //    fs1 << "D1" << D1;
-    //    fs1 << "D2" << D2;
-    //    fs1 << "R" << R;
-    //    fs1 << "T" << T;
-    //    fs1 << "E" << E;
-    //    fs1 << "F" << F;
+    double rms = stereoCalibrate(object_points, imagePoints1, imagePoints2,
+                                 CM1, D1, CM2, D2, img1.size(), R, T, E, F,
+                                 CV_CALIB_SAME_FOCAL_LENGTH | CV_CALIB_ZERO_TANGENT_DIST| CV_CALIB_USE_INTRINSIC_GUESS /*| CV_CALIB_FIX_INTRINSIC*/, cvTermCriteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS, 100, 1e-5)
+                                 );
+    
+    cout<<"Error: " <<rms<<endl;
+    
+//        FileStorage fs1("mystereocalib.yml", FileStorage::WRITE);
+//        fs1 << "CM1" << CM1;
+//        fs1 << "CM2" << CM2;
+//        fs1 << "D1" << D1;
+//        fs1 << "D2" << D2;
+//        fs1 << "R" << R;
+//        fs1 << "T" << T;
+//        fs1 << "E" << E;
+//        fs1 << "F" << F;
     cout<<"CM1: "<<CM1<<endl;
     cout<<"CM2: "<<CM2<<endl;
     cout<<"D1: "<<D1<<endl;
@@ -216,8 +218,8 @@ int main(int argc, char* argv[])
         cap1>>frame1;
         cap2>>frame2;
         
-        resize(frame1, cropFrame1, Size(640, 480),INTER_LINEAR);
-        resize(frame2, cropFrame2, Size(640, 480),INTER_LINEAR);
+        resize(frame1, cropFrame1, Size(W, H),INTER_LINEAR);
+        resize(frame2, cropFrame2, Size(W, H),INTER_LINEAR);
         
         cvtColor(cropFrame1, grayImage1, COLOR_RGB2GRAY);
         cvtColor(cropFrame2, grayImage2, COLOR_RGB2GRAY);
@@ -225,12 +227,12 @@ int main(int argc, char* argv[])
         cap1>>img1;
         cap2>>img2;
         
-        resize(img1, cropFrame3, Size(640, 480),INTER_LINEAR);
-        resize(img2, cropFrame4, Size(640, 480),INTER_LINEAR);
+        resize(img1, cropFrame3, Size(W, H),INTER_LINEAR);
+        resize(img2, cropFrame4, Size(W, H),INTER_LINEAR);
         cvtColor(cropFrame3, grayImage3, COLOR_BGR2GRAY);
         cvtColor(cropFrame4, grayImage4, COLOR_BGR2GRAY);
         absdiff(grayImage1,grayImage3,differenceImage1);
-        totalDiff = sum(differenceImage1) / (640 * 480);
+        totalDiff = sum(differenceImage1) / (W * H);
         cout << "sum diff: " <<totalDiff<<endl;
         if(totalDiff[0] > 14.0)
             continue;
@@ -240,8 +242,8 @@ int main(int argc, char* argv[])
         cv::threshold(thresholdImage,thresholdImage,SENSITIVITY_VALUE,255,THRESH_BINARY);
         //imshow("Final Threshold Image",thresholdImage);
         
-        resize(img1, img1, Size(640, 480),INTER_LINEAR);
-        resize(img2, img2, Size(640, 480),INTER_LINEAR);
+        resize(img1, img1, Size(W, H),INTER_LINEAR);
+        resize(img2, img2, Size(W, H),INTER_LINEAR);
         
         remap(img1, imgU1, map1x, map1y, INTER_LINEAR, BORDER_CONSTANT, Scalar());
         remap(img2, imgU2, map2x, map2y, INTER_LINEAR, BORDER_CONSTANT, Scalar());

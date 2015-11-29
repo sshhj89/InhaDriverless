@@ -16,7 +16,7 @@
 #define TESTNUM 50
 #define FEATURES 4
 
-#define BOUNDSIZE 4
+#define BOUNDSIZE 4 //make flexible
 #define DIFF 25.
 
 static double RHOMAX = 220.0 ;
@@ -139,6 +139,7 @@ public:
     list<double>& getBoundRhoPos() {return this->boundRhoPos;}
     list<double>& getBoundRhoNeg() { return this->boundRhoNeg;}
     
+    vector<LineInfo> getPositiveLines() {return this->positiveInfo;}
     void setPriorImage(Mat priorImage) { priorImage.copyTo(this->priorImage);}
     void setCurrentImage(Mat currentImage) { currentImage.copyTo(this->currentImage);}
     void setYellowImage(Mat yellow) { yellow.copyTo(this->YelloImage);}
