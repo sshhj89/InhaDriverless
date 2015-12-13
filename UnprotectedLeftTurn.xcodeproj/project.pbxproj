@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5611BDE82E700F93084 /* TrafficPlate.cpp */; };
 		FB81B5661BDE82E700F93084 /* UV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB81B5631BDE82E700F93084 /* UV.cpp */; };
+		FBA2E5E31C15655D00754FF9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB6E4B051B82D67E005B70F6 /* main.cpp */; };
 		FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */; };
-		FBEE7AAC1BFF800C00B16072 /* stereoCali.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */; };
 		FBEFAB1E1B88C49600127C97 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEFAB1D1B88C49600127C97 /* OpenCL.framework */; };
+		FBF048F31C0A87EC002DFF1F /* CTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBF048E61C078F8A002DFF1F /* CTracker.cpp */; };
+		FBF048F41C0A87EF002DFF1F /* HungarianAlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBF048E91C078FF2002DFF1F /* HungarianAlg.cpp */; };
+		FBF048FD1C0B6E46002DFF1F /* kalman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBF048E31C078F30002DFF1F /* kalman.cpp */; };
 		FBF5963D1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF5963C1B7F003A0055B2DD /* libopencv_xfeatures2d.3.0.0.dylib */; };
 /* End PBXBuildFile section */
 
@@ -35,18 +38,33 @@
 		FB81B5621BDE82E700F93084 /* TrafficPlate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficPlate.h; sourceTree = "<group>"; };
 		FB81B5631BDE82E700F93084 /* UV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UV.cpp; sourceTree = "<group>"; };
 		FB81B5641BDE82E700F93084 /* UV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UV.h; sourceTree = "<group>"; };
+		FBA2E5D51C11783900754FF9 /* checkCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkCamera.cpp; sourceTree = "<group>"; };
+		FBA2E5DC1C1285CD00754FF9 /* checkcamear2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkcamear2.cpp; sourceTree = "<group>"; };
 		FBE24F061BCF5C8B00F5CB1D /* MetaHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaHeader.h; sourceTree = "<group>"; };
 		FBE24F0A1BCF5D5600F5CB1D /* Lane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lane.cpp; sourceTree = "<group>"; };
 		FBE24F0B1BCF5D5600F5CB1D /* Lane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lane.h; sourceTree = "<group>"; };
 		FBE4678E1BC6C52300F3DB6D /* MovingFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MovingFinder.cpp; sourceTree = "<group>"; };
 		FBE4678F1BC6C52300F3DB6D /* MovingFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovingFinder.h; sourceTree = "<group>"; };
+		FBE6B1A51C020EDA007DE3C3 /* watershed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = watershed.cpp; sourceTree = "<group>"; };
 		FBEC252D1B91970900AFB2CD /* DriverlessCar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriverlessCar.cpp; sourceTree = "<group>"; };
 		FBEC252E1B91970900AFB2CD /* DriverlessCar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverlessCar.h; sourceTree = "<group>"; };
 		FBEC252F1B91A37400AFB2CD /* LineFinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LineFinder.cpp; sourceTree = "<group>"; };
 		FBEC25301B91A37400AFB2CD /* LineFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineFinder.h; sourceTree = "<group>"; };
 		FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stereoCali.cpp; sourceTree = "<group>"; };
 		FBEE7AA01BFE5B3F00B16072 /* stereoMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stereoMap.cpp; sourceTree = "<group>"; };
+		FBEF26FE1C0F7C6A00D6FBD3 /* bkMaintest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bkMaintest.cpp; sourceTree = "<group>"; };
 		FBEFAB1D1B88C49600127C97 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		FBF048E31C078F30002DFF1F /* kalman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kalman.cpp; sourceTree = "<group>"; };
+		FBF048E41C078F30002DFF1F /* kalman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kalman.h; sourceTree = "<group>"; };
+		FBF048E61C078F8A002DFF1F /* CTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTracker.cpp; sourceTree = "<group>"; };
+		FBF048E71C078F8A002DFF1F /* CTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTracker.h; sourceTree = "<group>"; };
+		FBF048E91C078FF2002DFF1F /* HungarianAlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HungarianAlg.cpp; sourceTree = "<group>"; };
+		FBF048EA1C078FF2002DFF1F /* HungarianAlg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HungarianAlg.h; sourceTree = "<group>"; };
+		FBF048ED1C07AC2F002DFF1F /* svmex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svmex.cpp; sourceTree = "<group>"; };
+		FBF048EE1C07AC2F002DFF1F /* svmex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = svmex.hpp; sourceTree = "<group>"; };
+		FBF048FE1C0B788B002DFF1F /* examKalman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = examKalman.cpp; sourceTree = "<group>"; };
+		FBF048FF1C0B788B002DFF1F /* examKalman.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = examKalman.hpp; sourceTree = "<group>"; };
+		FBF049031C0CCD84002DFF1F /* opencv3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = opencv3.cpp; sourceTree = "<group>"; };
 		FBF0FC971BF3C09C004EECD2 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		FBF0FC981BF3C595004EECD2 /* haardetection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = haardetection.cpp; sourceTree = "<group>"; };
 		FBF1CB401BFA6FC500054A65 /* depthMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = depthMap.cpp; sourceTree = "<group>"; };
@@ -133,6 +151,21 @@
 				FBF1CB401BFA6FC500054A65 /* depthMap.cpp */,
 				FBEE7A971BFCE35E00B16072 /* stereoCali.cpp */,
 				FBEE7AA01BFE5B3F00B16072 /* stereoMap.cpp */,
+				FBE6B1A51C020EDA007DE3C3 /* watershed.cpp */,
+				FBF048E31C078F30002DFF1F /* kalman.cpp */,
+				FBF048E41C078F30002DFF1F /* kalman.h */,
+				FBF048E61C078F8A002DFF1F /* CTracker.cpp */,
+				FBF048E71C078F8A002DFF1F /* CTracker.h */,
+				FBF048E91C078FF2002DFF1F /* HungarianAlg.cpp */,
+				FBF048EA1C078FF2002DFF1F /* HungarianAlg.h */,
+				FBF048ED1C07AC2F002DFF1F /* svmex.cpp */,
+				FBF048EE1C07AC2F002DFF1F /* svmex.hpp */,
+				FBF048FE1C0B788B002DFF1F /* examKalman.cpp */,
+				FBF048FF1C0B788B002DFF1F /* examKalman.hpp */,
+				FBF049031C0CCD84002DFF1F /* opencv3.cpp */,
+				FBEF26FE1C0F7C6A00D6FBD3 /* bkMaintest.cpp */,
+				FBA2E5D51C11783900754FF9 /* checkCamera.cpp */,
+				FBA2E5DC1C1285CD00754FF9 /* checkcamear2.cpp */,
 			);
 			path = UnprotectedLeftTurn;
 			sourceTree = "<group>";
@@ -193,9 +226,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBF048F41C0A87EF002DFF1F /* HungarianAlg.cpp in Sources */,
+				FBF048FD1C0B6E46002DFF1F /* kalman.cpp in Sources */,
 				FB81B5651BDE82E700F93084 /* TrafficPlate.cpp in Sources */,
 				FBE24F0C1BCF5D5600F5CB1D /* Lane.cpp in Sources */,
-				FBEE7AAC1BFF800C00B16072 /* stereoCali.cpp in Sources */,
+				FBA2E5E31C15655D00754FF9 /* main.cpp in Sources */,
+				FBF048F31C0A87EC002DFF1F /* CTracker.cpp in Sources */,
 				FB81B5661BDE82E700F93084 /* UV.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

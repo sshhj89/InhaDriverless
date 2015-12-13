@@ -51,7 +51,7 @@
 
 
 #define DIFF_X 10
-#define DIFF_Y 340
+#define DIFF_Y 400
 #define DIFF_W 700
 #define DIFF_H 200
 
@@ -79,9 +79,9 @@
 #define RED_SAT_MAX 255
 #define RED_INT_MAX 255
 
-#define GREEN_HUE_MIN 0
+#define GREEN_HUE_MIN 30
 #define GREEN_SAT_MIN 0
-#define GREEN_INT_MIN 240
+#define GREEN_INT_MIN 200
 
 #define GREEN_HUE_MAX 40
 #define GREEN_SAT_MAX 255

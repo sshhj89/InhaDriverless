@@ -72,10 +72,10 @@ void CTracker::Update(vector<Point2f>& detections)
     double dist;
     for(int i=0;i<tracks.size();i++)
     {
-        // Point2d prediction=tracks[i]->prediction;
-        // cout << prediction << endl;
+         Point2d prediction=tracks[i]->prediction;
         for(int j=0;j<detections.size();j++)
         {
+            //cal prediction and detection
             Point2d diff=(tracks[i]->prediction-detections[j]);
             dist=sqrtf(diff.x*diff.x+diff.y*diff.y);
             Cost[i][j]=dist;

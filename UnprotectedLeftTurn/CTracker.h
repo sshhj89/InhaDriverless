@@ -38,7 +38,7 @@ public:
     
     vector<CTrack*> tracks;
     void Update(vector<Point2f>& detections);
-    CTracker(float _dt, float _Accel_noise_mag, double _dist_thres=60, int _maximum_allowed_skipped_frames=10,int _max_trace_length=10);
+    CTracker(float _dt, float _Accel_noise_mag, double _dist_thres=60, int _maximum_allowed_skipped_frames=2,int _max_trace_length=15);
     ~CTracker(void);
 };
 
