@@ -29,14 +29,15 @@ void TrafficPlate::splitAsGreenBin(const Mat &image)
     Scalar     mean;
     Scalar     stddev;
     
-    cv::meanStdDev ( image_g, mean, stddev );
+    meanStdDev ( image_g, mean, stddev );
     int       mean_pxl = mean.val[0];
     int     stddev_pxl = stddev.val[0];
     
     int dev = sqrt(stddev_pxl);
-    
-    threshold(image_g, image_g, mean_pxl+2*dev, 255, THRESH_BINARY);
+    cout<<"green val:" <<mean_pxl+5*dev<<endl;
+    threshold(image_g, image_g, mean_pxl+5*dev, 255, THRESH_BINARY); //15
     image_g.copyTo(greenBin);
+    imshow("Greenbin1",greenBin);
 }
 
 Mat TrafficPlate::binaryOrigin()
@@ -63,12 +64,40 @@ Mat TrafficPlate::binaryOrigin()
 
 void TrafficPlate::setGreenHSV(const Mat& image)
 {
+    
+    //for webcamera
+//    cvtColor(image, greenHsv, CV_RGB2HSV);
+//    //    cvtColor(greenHsv, greenHsv, CV_BGR2HSV);
+//    imshow("hsv",greenHsv);
+//    ////
+//    //    inRange(greenHsv,Scalar(LIGHTS_HUE_MIN, LIGHTS_SAT_MIN, LIGHTS_INT_MIN), Scalar(LIGHTS_HUE_MAX, LIGHTS_SAT_MAX, LIGHTS_INT_MAX),greenHsv);
+//    //
+//    //
+//        inRange(greenHsv,Scalar(GREEN_HUE_MIN, GREEN_SAT_MIN, GREEN_INT_MIN), Scalar(GREEN_HUE_MAX, GREEN_SAT_MAX, GREEN_INT_MAX),greenHsv);
+//    //
+//        medianBlur(greenHsv, greenHsv, 5);
+//        dilate(greenHsv, greenHsv, Mat(), Point(-1,-1));
+//        dilate(greenHsv,greenHsv,Mat(),Point(1,1));
+//        imshow("green",greenHsv);
+
+    
+    
+    
+    /*for blackbox*/
     cvtColor(image, greenHsv, CV_BGR2HSV);
     cvtColor(greenHsv, greenHsv, CV_BGR2HSV);
+  //  imshow("hsv",greenHsv);
+//   
     inRange(greenHsv,Scalar(LIGHTS_HUE_MIN, LIGHTS_SAT_MIN, LIGHTS_INT_MIN), Scalar(LIGHTS_HUE_MAX, LIGHTS_SAT_MAX, LIGHTS_INT_MAX),greenHsv);
+    
+    
+//    inRange(greenHsv,Scalar(GREEN_HUE_MIN, GREEN_SAT_MIN, GREEN_INT_MIN), Scalar(GREEN_HUE_MAX, GREEN_SAT_MAX, GREEN_INT_MAX),greenHsv);
+    
     medianBlur(greenHsv, greenHsv, 5);
     dilate(greenHsv, greenHsv, Mat(), Point(-1,-1));
     dilate(greenHsv,greenHsv,Mat(),Point(1,1));
+    imshow("green",greenHsv);
+//
 }
 
 void TrafficPlate::findCircles(const Mat& image)
@@ -127,8 +156,8 @@ void TrafficPlate::filterLights()
         
         try
         {
-            greenSquare=temp(Rect(center.x - radius*5,center.y-radius,radius*4,radius*2));  //bound check
-        //imshow("ele", greenSquare);
+            greenSquare=temp(Rect(center.x - radius*7,center.y-radius,radius*6,radius*2));  //bound check
+           // imshow("ele", greenSquare);
         }
         catch(Exception e)
         {
@@ -204,6 +233,9 @@ bool TrafficPlate::filterPlate(Mat& possiblePlate)
         {
             if( i == maxIdx-1)
             {
+                if(contourArea(contours4Plate[maxIdx-1])< 300.0)
+                    return false;
+                
                 vector<Point> poly;
                 approxPolyDP(Mat(contours4Plate[maxIdx-1]), poly, 5, true);
                 vector<Point>::const_iterator pit = poly.begin();
@@ -254,7 +286,7 @@ bool TrafficPlate::filterPlate(Mat& possiblePlate)
         if(isPlate == true)
         {
             drawContours(result, contours4Plate, -1, Scalar(0),2);
-            imshow("plate",result);
+            //imshow("plate",result);
             isUnprotected = true;
             return true;
         }

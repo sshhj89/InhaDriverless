@@ -33,7 +33,10 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv2/ccalib.hpp>
-
+#include <opencv2/ml.hpp>
+#include "kalman.h"
+#include "HungarianAlg.h"
+#include "CTracker.h"
 
 #define PLATEDETECTED 3
 #define PLATECROP_X 640
@@ -45,6 +48,12 @@
 #define LANECROP_Y 460
 #define LANECROP_W 360
 #define LANECROP_H 180
+
+
+#define DIFF_X 10
+#define DIFF_Y 400
+#define DIFF_W 700
+#define DIFF_H 200
 
 #define WHITE_HUE_MIN 0
 #define WHITE_SAT_MIN 0
@@ -70,9 +79,9 @@
 #define RED_SAT_MAX 255
 #define RED_INT_MAX 255
 
-#define GREEN_HUE_MIN 0
+#define GREEN_HUE_MIN 30
 #define GREEN_SAT_MIN 0
-#define GREEN_INT_MIN 240
+#define GREEN_INT_MIN 200
 
 #define GREEN_HUE_MAX 40
 #define GREEN_SAT_MAX 255
@@ -98,6 +107,7 @@
 
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 
 #endif
